@@ -1,0 +1,40 @@
+{
+  "name": "@monolith/mobile",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "expo-router/entry",
+  "scripts": {
+    "dev": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "build": "tsc --noEmit",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rimraf .expo dist"
+  },
+  "dependencies": {
+    "@monolith/config": "workspace:*",
+    "@monolith/types": "workspace:*",
+    "expo": "~53.0.9",
+    "expo-router": "~5.0.7",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.1.0",
+    "react-native": "0.79.2",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.10.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.4",
+    "babel-preset-expo": "~13.1.5",
+    "@monolith/eslint-config": "workspace:*",
+    "@monolith/tsconfig": "workspace:*",
+    "@types/react": "~19.1.6",
+    "eslint": "^9.27.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.3"
+  }
+}

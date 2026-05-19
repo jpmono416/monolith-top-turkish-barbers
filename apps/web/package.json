@@ -1,0 +1,39 @@
+{
+  "name": "@monolith/web",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --port 3000",
+    "start": "next start --port 3000",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "clean": "rimraf .next"
+  },
+  "dependencies": {
+    "@monolith/config": "workspace:*",
+    "@monolith/types": "workspace:*",
+    "@monolith/ui": "workspace:*",
+    "next": "^15.3.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@monolith/eslint-config": "workspace:*",
+    "@monolith/tsconfig": "workspace:*",
+    "@playwright/test": "^1.52.0",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/node": "^22.15.29",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "eslint": "^9.27.0",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.1.8",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.3"
+  }
+}

@@ -1,0 +1,33 @@
+---
+description: Monolith platform engineering standards
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Monolith Platform Rules
+
+You are working in the Monolith AI-Native Engineering Platform monorepo.
+
+## Stack
+
+- Turborepo + pnpm workspaces
+- Next.js (web), NestJS (api), Expo (mobile)
+- Prisma + PostgreSQL, Redis + BullMQ
+- Vitest + Playwright
+
+## Conventions
+
+- Feature-based modules in `apps/api/src/features/`
+- Infrastructure in `apps/api/src/infrastructure/`
+- Shared UI: `@monolith/ui` (shadcn/ui)
+- Shared types: `@monolith/types`
+- Prisma schema at repository root: `prisma/schema.prisma`
+- Docker-first local development via `docker compose`
+
+## Rules
+
+- Production-grade code only; no placeholder business logic unless requested
+- Match existing patterns; minimise scope of changes
+- Type-safe, explicit configuration
+- Every PR must pass lint, typecheck, tests, and build
