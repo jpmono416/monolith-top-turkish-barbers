@@ -51,14 +51,13 @@ services:
       - '3001:3001'
     volumes:
       - .:/app
-      - api_node_modules:/app/node_modules
-      - api_app_node_modules:/app/apps/api/node_modules
+      - monolith_node_modules:/app/node_modules
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: sh -c "pnpm install && pnpm db:generate && pnpm --filter @monolith/api dev"
+    command: sh -c "pnpm install && pnpm db:generate && pnpm --filter @monolith/types build && pnpm --filter @monolith/config build && pnpm --filter @monolith/api dev"
 
   web:
     build:
@@ -77,8 +76,7 @@ services:
       - '3000:3000'
     volumes:
       - .:/app
-      - web_node_modules:/app/node_modules
-      - web_app_node_modules:/app/apps/web/node_modules
+      - monolith_node_modules:/app/node_modules
       - web_next_cache:/app/apps/web/.next
     depends_on:
       - api
@@ -87,8 +85,5 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  api_node_modules:
-  api_app_node_modules:
-  web_node_modules:
-  web_app_node_modules:
+  monolith_node_modules:
   web_next_cache:

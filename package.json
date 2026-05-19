@@ -21,9 +21,11 @@
     "db:studio": "prisma studio",
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down",
+    "docker:clean": "docker compose down -v",
     "docker:logs": "docker compose logs -f",
+    "clean:modules": "node scripts/clean-node-modules.mjs",
     "clean": "turbo run clean && rimraf node_modules",
-    "postinstall": "node scripts/create-expo-assets.mjs"
+    "postinstall": "prisma generate && node scripts/create-expo-assets.mjs"
   },
   "pnpm": {
     "overrides": {

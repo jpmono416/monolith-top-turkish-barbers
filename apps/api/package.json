@@ -5,9 +5,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "predev": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build",
     "dev": "nest start --watch",
     "start": "nest start",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/main.js",
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
