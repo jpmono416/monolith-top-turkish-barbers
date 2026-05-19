@@ -1,0 +1,119 @@
+---
+description: NestJS, Prisma, Redis, and BullMQ backend implementation standards
+globs:
+  - "apps/api/**"
+  - "prisma/**"
+alwaysApply: false
+---
+
+# Backend
+
+## Purpose
+
+Standardise NestJS API implementation: configuration, persistence, queues, validation, and service-layer business logic.
+
+## Required patterns
+
+### Bootstrap (`main.ts`)
+
+- Global prefix: `api`
+- Global `ValidationPipe`: `whitelist: true`, `forbidNonWhitelisted: true`, `transform: true`
+- CORS from typed config (`corsOrigin`)
+- Listen on `host` + `port` from config
+
+### Configuration
+
+- All env access goes through `@nestjs/config` with:
+  - `configuration.ts` — typed `AppConfig` factory
+  - `env.validation.ts` — `class-validator` schema; fail fast on boot
+- Inject config via `ConfigService<AppConfig, true>` with `{ infer: true }` on `get()`.
+- Document every new env var in `.env.example` with a comment.
+
+### Feature module anatomy
+
+```
+features/<name>/
+  <name>.module.ts
+  <name>.controller.ts
+  <name>.service.ts
+  dto/                    # request/response DTOs (class-validator)
+  <name>.service.spec.ts  # unit tests for service logic
+```
+
+- **Controller**: HTTP mapping only; return types use `@monolith/types` or DTOs.
+- **Service**: business logic, Prisma calls, queue enqueueing.
+- **DTO**: `class-validator` + `class-transformer` for inputs; never trust raw `req.body`.
+
+### Prisma
+
+- Schema at repo root: `prisma/schema.prisma`
+- Use `PrismaService` from `infrastructure/database/` — extend client in one place if needed.
+- Migrations via `pnpm db:migrate`; never hand-edit applied migration SQL without team review.
+- Use `directUrl` for migrations (Supabase pooler pattern); runtime uses `DATABASE_URL`.
+
+### Redis & BullMQ
+
+- Connection config from `redisUrl` and `bullmqPrefix` in `AppConfig`.
+- Register queue names in `infrastructure/queue/queue.constants.ts` (`QUEUE_NAMES`).
+- Processors are `@Processor(QUEUE_NAMES.x)` classes colocated with the owning feature.
+- Jobs must be idempotent where retries are possible.
+
+### Errors
+
+- Throw Nest HTTP exceptions (`NotFoundException`, `BadRequestException`, etc.) from services/controllers.
+- Do not leak stack traces or internal IDs in production error messages.
+
+## Forbidden patterns
+
+- `process.env` reads outside `config/` modules.
+- Prisma client instantiated outside `PrismaService`.
+- Business logic in controllers or DTO classes.
+- Skipping DTO validation “for internal endpoints”.
+- Synchronous blocking of HTTP requests for work that should be queued (emails, webhooks, heavy transforms).
+- Empty `catch` blocks or swallowed errors.
+- Placeholder `// TODO implement` in merged production paths unless the user explicitly requested stubs.
+
+## Implementation expectations
+
+- Export services that other modules need; keep controllers unexported.
+- Use constructor injection only; no service locator pattern.
+- Prefer explicit `findUnique` / `findMany` with `select` or `include` over fetching entire models when exposing API data.
+- Transactions: `prisma.$transaction` for multi-step writes that must commit or roll back together.
+- Health checks follow `features/health/` — extend for DB/Redis readiness when required.
+
+## Consistency expectations
+
+- New endpoints: DTO → service method → controller route → type in `@monolith/types` if consumed by web/mobile.
+- Match existing module import style in `app.module.ts`.
+- Run `pnpm --filter @monolith/api test` after service changes.
+
+## Examples
+
+**Good — service with Prisma**
+
+```typescript
+@Injectable()
+export class OrdersService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findById(id: string): Promise<OrderSummary | null> {
+    const order = await this.prisma.order.findUnique({
+      where: { id },
+      select: { id: true, status: true },
+    });
+    return order;
+  }
+}
+```
+
+**Good — enqueue job**
+
+```typescript
+await this.ordersQueue.add('send-confirmation', { orderId }, { attempts: 3 });
+```
+
+**Bad — env in service**
+
+```typescript
+const url = process.env.DATABASE_URL; // ❌ use ConfigService
+```

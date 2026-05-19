@@ -1,0 +1,114 @@
+---
+description: Turborepo, pnpm workspace, and shared package standards
+globs:
+  - "package.json"
+  - "pnpm-workspace.yaml"
+  - "turbo.json"
+  - "packages/**"
+  - "apps/**/package.json"
+alwaysApply: false
+---
+
+# Monorepo
+
+## Purpose
+
+Keep the Turborepo + pnpm workspace buildable, cacheable, and free of dependency spaghetti.
+
+## Required patterns
+
+### Workspace layout
+
+```yaml
+# pnpm-workspace.yaml
+packages:
+  - "apps/*"
+  - "packages/*"
+```
+
+- **Apps** depend on packages via `workspace:*`.
+- **Packages** depend on other packages via `workspace:*` — never duplicate version pins for internal deps.
+
+### Package manager
+
+- `packageManager`: `pnpm@9.15.9` in root `package.json`
+- `engines.node`: `>=22.0.0`
+- Install: `pnpm install` at repo root only — not `npm install` / `yarn` in apps.
+- CI: `pnpm install --frozen-lockfile`
+
+### Turbo tasks
+
+| Task | Behaviour |
+|------|-----------|
+| `build` | `dependsOn: ["^build"]` — dependencies build first |
+| `dev` | `cache: false`, `persistent: true` |
+| `lint`, `typecheck`, `test` | `dependsOn: ["^build"]` |
+
+- Root scripts delegate to Turbo: `pnpm build`, `pnpm dev`, `pnpm lint`, `pnpm typecheck`, `pnpm test`.
+
+### Prisma (root-owned)
+
+- Schema and migrations at `prisma/`
+- Root scripts: `db:generate`, `db:migrate`, `db:push`, `db:studio`
+- `postinstall`: `prisma generate` — apps must not run duplicate generate unless documented.
+
+### Shared packages
+
+| Package | Contains |
+|---------|----------|
+| `@monolith/types` | API/shared TS types only — no runtime deps |
+| `@monolith/config` | Constants, shared config values |
+| `@monolith/ui` | shadcn components + styles |
+| `@monolith/eslint-config` | ESLint presets |
+| `@monolith/tsconfig` | `extends` targets for apps/packages |
+
+- Packages that emit JS must have `build` script and `turbo.json` outputs under `dist/**` where applicable.
+
+### Filtering
+
+```bash
+pnpm --filter @monolith/api dev
+pnpm --filter @monolith/web test:e2e
+```
+
+Use filters for single-app work; use root scripts before PR for full validation.
+
+## Forbidden patterns
+
+- Importing app code from packages (reverse dependency).
+- Adding dependencies to root `package.json` that belong in a single app (except tooling: turbo, prisma, prettier).
+- Multiple lockfiles (`package-lock.json`, `yarn.lock`).
+- Bypassing Turbo with ad-hoc `cd apps/api && npm run build` in CI/docs.
+- Circular `workspace:*` dependencies between packages.
+
+## Implementation expectations
+
+- New app: add under `apps/`, register in workspace, add Turbo pipeline scripts, wire CI if deployable.
+- New package: add `package.json` with `name`, `main`/`types`/`exports`, `build` if compiled.
+- React version alignment via root `pnpm.overrides` — do not bump React in one app only.
+- `clean`: `pnpm clean` uses per-package `clean` scripts + optional `clean:modules` script.
+
+## Consistency expectations
+
+- Every app exposes: `build`, `dev`, `lint`, `typecheck`, `test`, `clean` (match existing apps).
+- Internal imports use package names (`@monolith/types`), not deep relative paths across repo root.
+
+## Examples
+
+**Good — package.json dependency**
+
+```json
+"@monolith/types": "workspace:*"
+```
+
+**Good — API predev builds deps**
+
+```json
+"predev": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build"
+```
+
+**Bad**
+
+```json
+"@monolith/types": "file:../../packages/types"  // ❌ use workspace:*
+```

@@ -1,0 +1,103 @@
+---
+description: Next.js, React, Tailwind, and shadcn/ui frontend standards
+globs:
+  - "apps/web/**"
+  - "packages/ui/**"
+alwaysApply: false
+---
+
+# Frontend
+
+## Purpose
+
+Standardise the Next.js web app and shared UI package for predictable rendering, styling, and API integration.
+
+## Required patterns
+
+### Rendering defaults
+
+- **Server Components by default** in `app/` — add `'use client'` only when the component needs hooks, browser APIs, or event handlers.
+- Data fetching for pages happens in Server Components or in `lib/` helpers called from them.
+- Use `next/image` for optimised images; use `next/link` for internal navigation.
+
+### Styling
+
+- **Tailwind CSS v4** utility classes; design tokens via CSS variables in `globals.css` (`bg-card`, `text-muted-foreground`, etc.).
+- **shadcn/ui** components live in `packages/ui`; import via `@monolith/ui`.
+- New shared primitives: add to `packages/ui/src/components/` following existing `button.tsx` patterns (`cn()` from `lib/utils`).
+- Do not introduce a second component library (MUI, Chakra, etc.) without explicit approval.
+
+### API integration
+
+- Base URL resolution (mirror `apps/web/src/lib/api.ts`):
+  - Server: `API_INTERNAL_URL` (Docker network) or `NEXT_PUBLIC_API_URL`
+  - Client: `NEXT_PUBLIC_API_URL` only
+- Return types from `@monolith/types`; handle failures explicitly (return `null`, error UI, or `notFound()` — never silent undefined behaviour for critical data).
+- Use `fetch` with Next cache options where appropriate (`next: { revalidate: N }` for semi-static data).
+
+### App Router conventions
+
+- `layout.tsx` — shell, fonts, providers (minimise client providers).
+- `page.tsx` — route UI; keep under ~80 lines; extract sections to colocated components.
+- `loading.tsx` / `error.tsx` — add for routes with async dependencies when UX requires it.
+- Route groups and parallel routes only when they solve a real layout problem.
+
+### State
+
+- Prefer server-fetched props and URL search params over global client state.
+- Client state: React `useState` / `useReducer` locally; reach for TanStack Query or similar only after a documented need — do not add by default.
+
+## Forbidden patterns
+
+- `'use client'` on pages that only display server-fetched data.
+- Direct `fetch('http://localhost:3001/...')` scattered across components — centralise in `lib/`.
+- Importing NestJS, Prisma, or Node-only modules into client components.
+- Inline styles or CSS modules for layout that Tailwind utilities already cover.
+- Copy-pasting shadcn components into `apps/web` instead of extending `@monolith/ui`.
+- `any` for API response shapes — use `@monolith/types`.
+
+## Implementation expectations
+
+- Public env vars must be prefixed `NEXT_PUBLIC_`.
+- Forms: use Server Actions or API routes with validation; mirror API DTO rules on the client where applicable.
+- Accessibility: semantic HTML, labels on inputs, keyboard-focusable interactive elements; shadcn components already handle most ARIA — do not strip it.
+- `apps/web/vercel.json` and env on Vercel must stay aligned with `.env.example`.
+
+## Consistency expectations
+
+- Page structure matches `apps/web/src/app/page.tsx` (Server Component, `@monolith/ui`, `lib/` data).
+- E2E-critical flows must remain testable via stable `data-testid` only when Playwright cannot target roles/text — prefer roles first.
+- Run `pnpm --filter @monolith/web lint typecheck test` before PR.
+
+## Examples
+
+**Good — server page + typed API helper**
+
+```tsx
+// apps/web/src/app/orders/page.tsx
+import { getOrders } from '@/lib/orders';
+
+export default async function OrdersPage() {
+  const orders = await getOrders();
+  if (!orders) return <p>Unable to load orders.</p>;
+  return <OrdersList orders={orders} />;
+}
+```
+
+**Good — client component (minimal)**
+
+```tsx
+'use client';
+import { Button } from '@monolith/ui';
+
+export function SubmitButton({ pending }: { pending: boolean }) {
+  return <Button disabled={pending}>Submit</Button>;
+}
+```
+
+**Bad — client page fetching**
+
+```tsx
+'use client';
+useEffect(() => { fetch('/api/...'); }, []); // ❌ prefer Server Component or lib helper
+```

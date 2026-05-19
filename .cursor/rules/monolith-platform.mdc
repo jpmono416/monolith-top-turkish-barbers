@@ -1,33 +1,57 @@
 ---
-description: Monolith platform engineering standards
-globs:
-  - "**/*"
+description: Monolith platform index — stack overview and rule map
 alwaysApply: true
 ---
 
-# Monolith Platform Rules
+# Monolith AI-Native Engineering Platform
 
-You are working in the Monolith AI-Native Engineering Platform monorepo.
+Monorepo template for the Monolith platform. Modular rules in `.cursor/rules/` — read the relevant file before changing code.
 
 ## Stack
 
-- Turborepo + pnpm workspaces
-- Next.js (web), NestJS (api), Expo (mobile)
-- Prisma + PostgreSQL, Redis + BullMQ
-- Vitest + Playwright
+| Layer | Technology |
+|-------|------------|
+| Monorepo | Turborepo + pnpm workspaces |
+| Web | Next.js 15, React 19, Tailwind 4, shadcn/ui (`@monolith/ui`) |
+| API | NestJS 11, Prisma, PostgreSQL |
+| Cache/queues | Redis, BullMQ |
+| Mobile | Expo (`apps/mobile`) |
+| Tests | Vitest, Playwright |
+| Local | Docker Compose (`postgres`, `redis`, optional `api`/`web`) |
+| Deploy | Vercel (web), Railway (api), Supabase (db), Upstash (redis) |
 
-## Conventions
+## Rule map
 
-- Feature-based modules in `apps/api/src/features/`
-- Infrastructure in `apps/api/src/infrastructure/`
-- Shared UI: `@monolith/ui` (shadcn/ui)
-- Shared types: `@monolith/types`
-- Prisma schema at repository root: `prisma/schema.prisma`
-- Docker-first local development via `docker compose`
+| Rule file | When to apply |
+|-----------|----------------|
+| `agent-behaviour.mdc` | Always — AI workflow and scope |
+| `architecture.mdc` | Layers, modules, dependency boundaries |
+| `backend.mdc` | `apps/api`, Prisma, queues |
+| `frontend.mdc` | `apps/web`, `@monolith/ui` |
+| `api-design.mdc` | HTTP contracts, DTOs, `@monolith/types` |
+| `naming.mdc` | Files, symbols, env, DB names |
+| `monorepo.mdc` | pnpm, Turbo, workspace packages |
+| `testing.mdc` | Vitest, Playwright |
+| `docker.mdc` | Compose, Dockerfiles |
+| `infra.mdc` | CI, Railway, Vercel, Supabase, Upstash |
+| `security.mdc` | Secrets, auth, validation |
 
-## Rules
+## Non-negotiables
 
-- Production-grade code only; no placeholder business logic unless requested
-- Match existing patterns; minimise scope of changes
-- Type-safe, explicit configuration
-- Every PR must pass lint, typecheck, tests, and build
+- Production-grade code; no placeholders unless requested
+- Prisma schema at `prisma/schema.prisma`; API prefix `/api`
+- Feature modules: `apps/api/src/features/`; infra: `apps/api/src/infrastructure/`
+- Shared types: `@monolith/types`; shared UI: `@monolith/ui`
+- PR gate: `pnpm lint`, `typecheck`, `test`, `build`, Playwright E2E
+
+## Key paths
+
+```
+apps/api/src/features/     # Domain modules
+apps/api/src/infrastructure/
+apps/web/src/app/          # Next.js App Router
+packages/types/            # API contracts
+prisma/schema.prisma
+infrastructure/docker/
+.github/workflows/ci.yml
+```

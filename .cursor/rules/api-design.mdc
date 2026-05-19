@@ -1,0 +1,136 @@
+---
+description: REST API design, DTOs, errors, and shared HTTP contracts
+globs:
+  - "apps/api/**"
+  - "packages/types/**"
+alwaysApply: false
+---
+
+# API design
+
+## Purpose
+
+Keep HTTP interfaces consistent, typed, and evolvable across web, mobile, and third-party consumers.
+
+## Required patterns
+
+### URL structure
+
+- Base path: `/api` (global prefix in NestJS).
+- Resource-oriented paths: plural nouns, kebab-case segments.
+
+```
+GET    /api/health
+GET    /api/orders
+GET    /api/orders/:id
+POST   /api/orders
+PATCH  /api/orders/:id
+DELETE /api/orders/:id
+```
+
+- Nested resources only when ownership is clear: `/api/orders/:orderId/items`.
+- No verbs in paths (`/api/getOrders` ❌).
+
+### HTTP methods & status codes
+
+| Action | Method | Success status |
+|--------|--------|----------------|
+| Read one | GET | 200 |
+| Read list | GET | 200 |
+| Create | POST | 201 |
+| Full replace | PUT | 200 |
+| Partial update | PATCH | 200 |
+| Delete | DELETE | 204 (no body) or 200 |
+| Invalid input | — | 400 |
+| Unauthenticated | — | 401 |
+| Forbidden | — | 403 |
+| Not found | — | 404 |
+| Conflict | — | 409 |
+
+### Request/response contracts
+
+- **Shared response types** in `@monolith/types` (e.g. `ApiHealthResponse`, `PaginatedResponse<T>`, `ApiErrorResponse`).
+- **Request DTOs** in `apps/api/src/features/<feature>/dto/` with validation decorators.
+- Response bodies are JSON; use camelCase property names in JSON.
+- Paginated lists use `PaginatedResponse<T>` shape:
+
+```typescript
+{
+  data: T[];
+  meta: { page, pageSize, total, totalPages };
+}
+```
+
+### Error responses
+
+Nest default filter shape — align with `ApiErrorResponse`:
+
+```json
+{
+  "statusCode": 404,
+  "message": "Order not found",
+  "error": "Not Found"
+}
+```
+
+- `message` is human-readable; safe for UI display.
+- Do not include internal codes, SQL, or stack traces.
+
+### Versioning
+
+- No URL version prefix until a breaking change requires it (`/api/v1/...`).
+- Prefer backward-compatible additions (new optional fields) over breaking changes.
+
+## Forbidden patterns
+
+- Returning raw Prisma entities with sensitive fields (`passwordHash`, internal flags).
+- Inconsistent pagination (`limit/offset` in one endpoint, `page/size` in another) — use `meta` from `PaginatedResponse`.
+- `200` with `{ success: false }` instead of proper HTTP error status.
+- Mixed naming (`snake_case` in JSON, `camelCase` in TypeScript types exposed to clients).
+- Duplicate type definitions in API and `@monolith/types`.
+
+## Implementation expectations
+
+- Controller method return types are explicit (`Promise<OrderSummary>` or sync where trivial).
+- Query DTOs for filters (`?page=1&pageSize=20`) with validated defaults.
+- `POST` returns `201` + `Location` header when creating addressable resources (optional but preferred).
+- Idempotent `PUT`/`DELETE` where applicable.
+
+## Consistency expectations
+
+- Web `lib/` functions mirror API paths (`/api/health` → `getApiHealth`).
+- OpenAPI/Swagger — add only when team adopts it project-wide; until then types in `@monolith/types` are the contract.
+
+## Examples
+
+**Good — typed controller**
+
+```typescript
+@Controller('orders')
+export class OrdersController {
+  @Get()
+  list(@Query() query: ListOrdersQueryDto): Promise<PaginatedResponse<OrderSummary>> {
+    return this.ordersService.list(query);
+  }
+}
+```
+
+**Good — shared error type**
+
+```typescript
+// packages/types/src/index.ts
+export type ApiErrorResponse = {
+  statusCode: number;
+  message: string;
+  error?: string;
+};
+```
+
+**Bad — leaking ORM model**
+
+```typescript
+@Get(':id')
+findOne(@Param('id') id: string) {
+  return this.prisma.user.findUnique({ where: { id } }); // ❌ may include passwordHash
+}
+```

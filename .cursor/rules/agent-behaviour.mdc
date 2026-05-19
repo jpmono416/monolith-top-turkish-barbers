@@ -1,0 +1,80 @@
+---
+description: AI agent operational behaviour for Monolith platform development
+alwaysApply: true
+---
+
+# Agent behaviour
+
+## Purpose
+
+Make AI-assisted changes predictable, reviewable, and aligned with Monolith engineering standards — minimise scope creep, architectural drift, and low-quality output.
+
+## Required patterns
+
+### Before writing code
+
+1. Read relevant `.cursor/rules/*.mdc` for the touched area (architecture, backend, frontend, etc.).
+2. Inspect existing files in the target feature — **match patterns**, do not invent parallel structures.
+3. Confirm whether the task needs DB migration, new env vars, Docker/CI updates, or types in `@monolith/types`.
+
+### Scope discipline
+
+- Implement exactly what was requested; no drive-by refactors or unrelated formatting.
+- Prefer extending existing modules over creating new abstractions.
+- Smallest correct diff wins — five focused lines beat a new utility layer.
+
+### Output quality
+
+- **Production-grade only** — no placeholder business logic unless the user explicitly asked for stubs.
+- No pseudo-code, no `// TODO: implement` in delivered features.
+- Type-safe, explicit code; no `any` without documented justification.
+- Comments only for non-obvious business or technical constraints.
+
+### After implementation
+
+- Run or recommend: `pnpm lint`, `pnpm typecheck`, `pnpm test`, and affected `pnpm build`.
+- If schema changed: `pnpm db:migrate` (or document migration for user).
+- If env added: update `.env.example`, `env.validation.ts`, `configuration.ts`.
+- Summarise what changed, why, and how to verify — not a file-by-file dump.
+
+### Git & PRs
+
+- Do **not** commit unless the user explicitly asks.
+- Do **not** push or open PRs unless asked.
+- When asked for a PR: ensure CI checklist from `docs/workflows/development.md` is reflected in test plan.
+
+### Questions vs assumptions
+
+- Ask when requirements are ambiguous and wrong assumptions are costly (auth model, billing rules, data ownership).
+- Do **not** ask when the codebase already shows the pattern — infer and match.
+
+## Forbidden patterns
+
+- Introducing new libraries without clear need (state managers, ORMs, UI kits).
+- Creating `utils/`, `helpers/`, or `common/` catch-all modules.
+- Rewriting working code to a different style in untouched files.
+- Disabling lint/typecheck/tests to “make it work”.
+- Generating large markdown/docs files unless requested.
+- Claiming tests passed without running them when tools are available.
+
+## Implementation expectations
+
+- **Consistency over cleverness** — follow `health` feature and existing `lib/api.ts` patterns.
+- **Docker-first awareness** — note when changes need compose or Dockerfile updates.
+- **Cross-app changes** — order: types → API → web/mobile → tests.
+- **Windows dev** — remember Docker volume/`node_modules` issues; point to `docs/workflows/development.md` when relevant.
+
+## Consistency expectations
+
+- Honour all modular rules; this file does not override `security.mdc`, `architecture.mdc`, etc.
+- Platform name: **Monolith AI-Native Engineering Platform**; package scope `@monolith/*`.
+
+## Examples
+
+**Good agent summary**
+
+> Added `OrderSummary` to `@monolith/types`, `OrdersModule` with list endpoint, and `getOrders()` in web `lib/`. Run `pnpm db:migrate`, then `pnpm dev`. Verify `GET /api/orders` and `/orders` page.
+
+**Bad agent behaviour**
+
+> Refactored entire API to hexagonal architecture and added Redux. // ❌ unrequested, high drift
