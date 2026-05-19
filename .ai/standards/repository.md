@@ -1,8 +1,26 @@
 # Repository Standards
 
-This repository is the canonical template for Monolith projects.
+Canonical template for Monolith AI-native projects.
 
-- All apps must build independently via Turborepo
-- All services must run via Docker Compose for local development
-- Environment variables are documented in `.env.example`
-- AI-readable structure: explicit folders, minimal magic, consistent naming
+## Invariants
+
+- Apps build independently via Turborepo (`pnpm build`)
+- Local infra via Docker Compose (`pnpm docker:up`) or postgres/redis + host `pnpm dev`
+- Env contract in `.env.example`; validated at API boot
+- Prisma schema at repo root `prisma/schema.prisma`
+- API prefix `/api`; features under `apps/api/src/features/`
+- Shared types `@monolith/types`; shared UI `@monolith/ui`
+
+## Documentation
+
+| Area | Path |
+|------|------|
+| Human workflows | `docs/` |
+| Agent prompts | `.ai/prompts/` |
+| IDE enforcement | `.cursor/rules/*.mdc` |
+
+## PR gate
+
+`pnpm lint`, `typecheck`, `test`, `build`, Playwright E2E on web changes.
+
+See `docs/README.md` and `.ai/README.md` for navigation.

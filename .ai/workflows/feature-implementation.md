@@ -1,9 +1,16 @@
-# Feature Implementation Workflow
+# Feature Implementation Workflow (short)
 
-1. Define spec in `docs/specs/`
-2. Add Prisma models and run `pnpm db:migrate`
-3. Implement API feature module under `apps/api/src/features/<feature>/`
-4. Add shared types to `@monolith/types` if needed
-5. Implement web UI consuming API
-6. Add Vitest tests for services and Playwright flows for critical paths
-7. Update `.env.example` if new variables are required
+Full process: [product-to-implementation.md](./product-to-implementation.md) and `docs/workflows/ai-implementation-workflow.md`.
+
+Agent prompt: `.ai/prompts/feature-implementation.md`.
+
+## Checklist
+
+1. Approved spec in `docs/specs/`
+2. `@monolith/types` if cross-app contract
+3. Prisma + `pnpm db:migrate`
+4. `apps/api/src/features/<feature>/` (see `.ai/templates/feature-module.md`)
+5. Web `lib/` + pages
+6. Vitest on services; Playwright if critical UI
+7. `.env.example` + validation if new env
+8. `pnpm lint`, `typecheck`, `test`, `build`

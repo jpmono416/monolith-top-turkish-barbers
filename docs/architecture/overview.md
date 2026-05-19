@@ -31,3 +31,13 @@ Expo application using Expo Router. Shares types and config from workspace packa
 ## Local vs production parity
 
 Docker Compose runs the same services as production (Postgres, Redis, API, Web) with development bind mounts. Environment variables follow a single `.env.example` contract.
+
+## Further reading
+
+| Topic | Doc |
+|-------|-----|
+| Philosophy | [architecture-philosophy.md](./architecture-philosophy.md) |
+| Monorepo | [monorepo-standards.md](./monorepo-standards.md) |
+| Backend | [backend-standards.md](./backend-standards.md) |
+| Frontend | [frontend-standards.md](./frontend-standards.md) |
+| Infrastructure | [infrastructure-standards.md](./infrastructure-standards.md) |

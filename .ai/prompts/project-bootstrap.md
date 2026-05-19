@@ -1,77 +1,63 @@
 You are operating within the Monolith AI-Native Engineering Platform.
 
-Your job is to implement production-grade software following the platform standards exactly.
+Your job is to implement production-grade software following platform standards exactly.
 
-CORE PRINCIPLES:
+## Core principles
+
 - Consistency over cleverness
 - Predictability over novelty
 - Simplicity over abstraction
-- Reusability over duplication
-- Infrastructure parity between local and production
-- Docker-first development
+- Infrastructure parity (Docker-first local)
 - Type safety everywhere
-- AI-agent readability and maintainability are top priorities
+- Optimise for AI-agent readability and long-term maintainability
 
-TECH STACK:
-- Monorepo: Turborepo
-- Package manager: pnpm
-- Frontend: Next.js + TypeScript + Tailwind + shadcn/ui
-- Backend: NestJS + Prisma
-- Database: PostgreSQL
-- Cache/Queues: Redis + BullMQ
-- Testing: Vitest + Playwright
-- Deployment:
-  - Frontend → Vercel
-  - Backend → Railway
-  - Database → Supabase
-  - Redis → Upstash
-- CI/CD: GitHub Actions
+## Stack
 
-ARCHITECTURE RULES:
-- Use feature-based modular organisation
-- Keep modules self-contained
-- Use DTOs for API boundaries
-- Use Prisma for all database access
-- Use service layers for business logic
-- Avoid premature abstractions
-- Avoid unnecessary design patterns
-- Prefer explicitness over magic
-- Use typed interfaces everywhere
-- Use environment variables for configuration
-- Every service must run through Docker
-- Every app must build independently
-- Every PR must pass linting, tests, and type checking
+| Layer | Technology |
+|-------|------------|
+| Monorepo | Turborepo + pnpm |
+| Web | Next.js 15, React 19, Tailwind 4, `@monolith/ui` |
+| API | NestJS 11, Prisma, PostgreSQL |
+| Cache/queues | Redis, BullMQ |
+| Mobile | Expo (`apps/mobile`) |
+| Tests | Vitest, Playwright |
+| Deploy | Vercel (web), Railway (api), Supabase (db), Upstash (redis) |
 
-FRONTEND RULES:
-- Use server components by default where appropriate
-- Use shadcn/ui components
-- Use Tailwind utilities
-- Keep pages thin
-- Place reusable UI in shared packages
-- Avoid deeply nested prop drilling
-- Avoid overusing global state
+## Architecture
 
-BACKEND RULES:
-- Use NestJS modules/services/controllers
-- Use Prisma ORM
-- Use BullMQ for async jobs
-- Keep business logic inside services
-- Validate DTOs properly
-- Use structured logging
-- Keep configuration centralised
+- API: `apps/api/src/features/`, `infrastructure/`, `config/`
+- Web: `apps/web/src/app/`, `lib/`, `components/`
+- Schema: `prisma/schema.prisma` (repo root)
+- Shared types: `@monolith/types`
+- Global API prefix: `/api`
+- Reference feature: `health`
 
-TESTING RULES:
-- Use Vitest for unit/integration testing
-- Use Playwright for E2E
-- Test critical business logic
-- Avoid brittle snapshot-heavy testing
-- Focus on maintainable high-value tests
+## Rules (non-negotiable)
 
-OUTPUT EXPECTATIONS:
-- Production-grade code only
-- No placeholders unless explicitly requested
+- Feature modules self-contained; no cross-feature imports
+- DTOs + ValidationPipe on API inputs
+- Business logic in services, not controllers or React pages
+- Prisma only; env via typed config
+- BullMQ for async work
+- Every PR: lint, typecheck, test, build, E2E when UI changes
+
+## Before coding
+
+1. Read `.cursor/rules/*.mdc` for touched areas
+2. Read specs in `docs/specs/` if present
+3. Match existing patterns — do not invent parallel structures
+
+## Output
+
+- Production-grade code only (no placeholders unless requested)
 - No pseudo-code
-- No unnecessary comments
-- Keep implementation clean and maintainable
-- Follow existing patterns consistently
-- Optimise for long-term maintainability and AI readability
+- Minimal comments
+- Summarise: what, why, how to verify (commands + routes)
+
+## Docs map
+
+| Need | Location |
+|------|----------|
+| Spec workflow | `docs/workflows/spec-driven-development.md` |
+| Local dev | `docs/workflows/development.md` |
+| Agent rules | `.ai/standards/ai-agent-guidelines.md` |
