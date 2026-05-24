@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Monolith AI-Native Engineering Platform
 
-Monorepo template for the Monolith platform. Modular rules in `.cursor/rules/` — read the relevant file before changing code.
+Monorepo template for the Monolith platform. This file is the entry point — read the topic rule below before changing code in its area.
 
 ## Stack
 
@@ -20,34 +20,30 @@ Monorepo template for the Monolith platform. Modular rules in `.cursor/rules/` �
 | Local | Docker Compose (`postgres`, `redis`, optional `api`/`web`) |
 | Deploy | Vercel (web), Railway (api), Supabase (db), Upstash (redis) |
 
-## Rule map
+## Rule map (canonical owners)
 
-| Rule file | When to apply |
-|-----------|----------------|
-| `agent-behaviour.mdc` | Always — AI workflow and scope |
-| `architecture.mdc` | Layers, modules, dependency boundaries |
-| `backend.mdc` | `apps/api`, Prisma, queues |
-| `frontend.mdc` | `apps/web`, `@monolith/ui` |
-| `api-design.mdc` | HTTP contracts, DTOs, `@monolith/types` |
-| `naming.mdc` | Files, symbols, env, DB names |
-| `monorepo.mdc` | pnpm, Turbo, workspace packages |
-| `testing.mdc` | Vitest, Playwright |
-| `docker.mdc` | Compose, Dockerfiles |
-| `infra.mdc` | CI, Railway, Vercel, Supabase, Upstash |
-| `security.mdc` | Secrets, auth, validation |
+Every concern has one canonical rule file. Other rules reference it instead of duplicating.
 
-## Non-negotiables
+| Rule | Owns | Globs |
+|------|------|-------|
+| `agent-behaviour.mdc` | AI workflow, scope discipline, output quality | always |
+| `architecture.mdc` | Repo layout, layer boundaries, dependency direction | `apps/**`, `packages/**`, `prisma/**` |
+| `backend.mdc` | Nest/Prisma/queue implementation, env wiring | `apps/api/**`, `prisma/**` |
+| `frontend.mdc` | Next/Tailwind/shadcn implementation | `apps/web/**`, `packages/ui/**` |
+| `api-design.mdc` | HTTP contracts, DTOs, response shapes | `apps/api/**`, `packages/types/**` |
+| `naming.mdc` | File, symbol, env, DB, route casing | `**/*` |
+| `monorepo.mdc` | pnpm workspace, Turbo tasks, Node/pnpm toolchain | workspace files |
+| `testing.mdc` | What to test, how to test it | test files |
+| `docker.mdc` | Local Compose, Dockerfiles | compose + dockerfiles |
+| `infra.mdc` | CI, deploy, env-var registration across platforms | `.github/**`, `infrastructure/**` |
+| `security.mdc` | Secrets, auth, validation policy | `apps/**`, `packages/**`, `.env.example` |
 
-- Production-grade code; no placeholders unless requested
-- Prisma schema at `prisma/schema.prisma`; API prefix `/api`
-- Feature modules: `apps/api/src/features/`; infra: `apps/api/src/infrastructure/`
-- Shared types: `@monolith/types`; shared UI: `@monolith/ui`
-- PR gate: `pnpm lint`, `typecheck`, `test`, `build`, Playwright E2E
+For overlap resolution and how to interpret cross-references, see [`docs/architecture/rule-system-overview.md`](../../docs/architecture/rule-system-overview.md).
 
 ## Key paths
 
 ```
-apps/api/src/features/     # Domain modules
+apps/api/src/features/     # Feature folders
 apps/api/src/infrastructure/
 apps/web/src/app/          # Next.js App Router
 packages/types/            # API contracts

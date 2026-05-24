@@ -26,7 +26,7 @@ Define what to test, how to test it, and what not to waste CI time on — high s
 | E2E | Playwright | `apps/web/e2e/` |
 
 - Run full suite: `pnpm test` (Turbo across workspace).
-- E2E in CI: `pnpm --filter @monolith/web test:e2e` after quality job (see `.github/workflows/ci.yml`).
+- E2E in CI runs after the quality job — pipeline shape is owned by `infra.mdc`.
 
 ### API unit tests
 
@@ -48,7 +48,7 @@ Define what to test, how to test it, and what not to waste CI time on — high s
 
 ### PR gate
 
-Every PR must pass: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, and Playwright E2E on `main` PRs.
+Test commands run as part of the PR gate defined in `infra.mdc`.
 
 ## Forbidden patterns
 

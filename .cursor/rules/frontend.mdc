@@ -10,42 +10,42 @@ alwaysApply: false
 
 ## Purpose
 
-Standardise the Next.js web app and shared UI package for predictable rendering, styling, and API integration.
+Standardise the Next.js web app and shared UI package for predictable rendering, styling, and API integration. Top-level layout (`app/`, `lib/`, `components/`) is owned by `architecture.mdc`.
 
 ## Required patterns
 
 ### Rendering defaults
 
-- **Server Components by default** in `app/` — add `'use client'` only when the component needs hooks, browser APIs, or event handlers.
-- Data fetching for pages happens in Server Components or in `lib/` helpers called from them.
-- Use `next/image` for optimised images; use `next/link` for internal navigation.
+- **Server Components by default** in `app/`. Add `'use client'` only when the component needs hooks, browser APIs, or event handlers.
+- Page data fetching happens in Server Components or `lib/` helpers called from them.
+- Use `next/image` for optimised images, `next/link` for internal navigation.
 
-### Styling
+### Styling & UI
 
-- **Tailwind CSS v4** utility classes; design tokens via CSS variables in `globals.css` (`bg-card`, `text-muted-foreground`, etc.).
+- **Tailwind CSS v4** utilities; design tokens via CSS variables in `globals.css` (`bg-card`, `text-muted-foreground`, …).
 - **shadcn/ui** components live in `packages/ui`; import via `@monolith/ui`.
-- New shared primitives: add to `packages/ui/src/components/` following existing `button.tsx` patterns (`cn()` from `lib/utils`).
-- Do not introduce a second component library (MUI, Chakra, etc.) without explicit approval.
+- New shared primitives go in `packages/ui/src/components/` following `button.tsx` (uses `cn()` from `lib/utils`).
+- Do not introduce a second component library (MUI, Chakra, …) — see `agent-behaviour.mdc` (forbidden).
 
 ### API integration
 
 - Base URL resolution (mirror `apps/web/src/lib/api.ts`):
   - Server: `API_INTERNAL_URL` (Docker network) or `NEXT_PUBLIC_API_URL`
   - Client: `NEXT_PUBLIC_API_URL` only
-- Return types from `@monolith/types`; handle failures explicitly (return `null`, error UI, or `notFound()` — never silent undefined behaviour for critical data).
-- Use `fetch` with Next cache options where appropriate (`next: { revalidate: N }` for semi-static data).
+- Response types from `@monolith/types`. Failures handled explicitly: return `null`, render error UI, or call `notFound()`.
+- Use `fetch` with Next cache options (`next: { revalidate: N }`) for semi-static data.
 
 ### App Router conventions
 
 - `layout.tsx` — shell, fonts, providers (minimise client providers).
-- `page.tsx` — route UI; keep under ~80 lines; extract sections to colocated components.
-- `loading.tsx` / `error.tsx` — add for routes with async dependencies when UX requires it.
+- `page.tsx` — route UI; keep under ~80 lines, extract sections to colocated components.
+- `loading.tsx` / `error.tsx` — add when the route has async dependencies and UX requires it.
 - Route groups and parallel routes only when they solve a real layout problem.
 
 ### State
 
-- Prefer server-fetched props and URL search params over global client state.
-- Client state: React `useState` / `useReducer` locally; reach for TanStack Query or similar only after a documented need — do not add by default.
+- Prefer server-fetched props and URL search params over client global state.
+- Local client state: `useState` / `useReducer`. Reach for TanStack Query or similar only after a documented need.
 
 ## Forbidden patterns
 
@@ -58,15 +58,9 @@ Standardise the Next.js web app and shared UI package for predictable rendering,
 
 ## Implementation expectations
 
-- Public env vars must be prefixed `NEXT_PUBLIC_`.
-- Forms: use Server Actions or API routes with validation; mirror API DTO rules on the client where applicable.
-- Accessibility: semantic HTML, labels on inputs, keyboard-focusable interactive elements; shadcn components already handle most ARIA — do not strip it.
-- `apps/web/vercel.json` and env on Vercel must stay aligned with `.env.example`.
-
-## Consistency expectations
-
-- Page structure matches `apps/web/src/app/page.tsx` (Server Component, `@monolith/ui`, `lib/` data).
-- E2E-critical flows must remain testable via stable `data-testid` only when Playwright cannot target roles/text — prefer roles first.
+- Public env vars must be prefixed `NEXT_PUBLIC_` (see `naming.mdc`).
+- Forms: Server Actions or API routes with validation; mirror API DTO rules on the client where applicable.
+- Accessibility: semantic HTML, labelled inputs, keyboard-focusable interactive elements. Don't strip ARIA from shadcn components.
 - Run `pnpm --filter @monolith/web lint typecheck test` before PR.
 
 ## Examples
@@ -84,7 +78,7 @@ export default async function OrdersPage() {
 }
 ```
 
-**Good — client component (minimal)**
+**Good — minimal client component**
 
 ```tsx
 'use client';
@@ -99,5 +93,5 @@ export function SubmitButton({ pending }: { pending: boolean }) {
 
 ```tsx
 'use client';
-useEffect(() => { fetch('/api/...'); }, []); // ❌ prefer Server Component or lib helper
+useEffect(() => { fetch('/api/...'); }, []); // prefer Server Component or lib helper
 ```

@@ -12,19 +12,20 @@ alwaysApply: false
 
 ## Purpose
 
-Minimise risk from secrets leakage, injection, broken auth, and unsafe defaults in API, web, and infrastructure code.
+Minimise risk from secrets leakage, injection, broken auth, and unsafe defaults. Validation pipe wiring lives in `backend.mdc`; error response shape in `api-design.mdc`; env-var registration in `infra.mdc`.
 
 ## Required patterns
 
-### Secrets management
+### Secrets
 
 - Secrets live in `.env` locally (gitignored) and in platform secret stores in production — **never** in source control.
-- `.env.example` documents keys only — placeholder or empty values, no real credentials.
-- Web exposes only `NEXT_PUBLIC_*` vars to the browser; API keys and `JWT_SECRET` stay server-side.
+- `.env.example` documents keys with placeholder/empty values, no real credentials.
+- Browser-exposed env vars use `NEXT_PUBLIC_` prefix; everything else stays server-side.
+- Supabase: `SUPABASE_ANON_KEY` is web-safe. `SUPABASE_SERVICE_ROLE` is API-only — never `NEXT_PUBLIC_`.
 
 ### Input validation
 
-- API: global `ValidationPipe` + per-route DTOs with `class-validator` decorators.
+- API: global `ValidationPipe` + per-route DTOs (configured in `backend.mdc`).
 - Reject unknown fields (`forbidNonWhitelisted: true`).
 - Prisma parameterised queries only — no string-concatenated SQL.
 
@@ -32,49 +33,47 @@ Minimise risk from secrets leakage, injection, broken auth, and unsafe defaults 
 
 - CORS: explicit `CORS_ORIGIN` — no `*` in production with credentials.
 - API behind `/api` prefix; do not expose admin or debug routes without auth.
-- Rate limiting and auth middleware — add when features require them; document in feature module.
+- Rate limiting and auth middleware: add when features require, document in the feature module.
 
-### Authentication (when implemented)
+### Authentication
 
-- JWT or session config via env (`JWT_SECRET`, `JWT_EXPIRES_IN` in `.env.example` stubs).
+- JWT or session config via env (`JWT_SECRET`, `JWT_EXPIRES_IN`).
 - Hash passwords with bcrypt/argon2 — never store plaintext.
-- Auth guards on all non-public controllers by default; opt-out explicitly per route.
-- Supabase client keys: `SUPABASE_ANON_KEY` in web only; service role key **API-only**, never `NEXT_PUBLIC_`.
+- Auth guards on all non-public controllers by default; opt out explicitly per route.
 
-### Data access
+### Authorisation
 
-- Authorise in the **service layer** (user can only access their tenant’s rows) — not only by hiding UI buttons.
-- Log user ids and request ids — not passwords, tokens, or full PII payloads.
+- Authorise in the **service layer** (user can only access their tenant's rows). UI hiding is not enough.
+- Never trust client-sent `userId` / `role` — derive from the verified session.
+
+### Logging & errors
+
+- Log user IDs and request IDs — not passwords, tokens, or full PII payloads.
+- Production error responses follow `api-design.mdc`. Never return stack traces or internal IDs to clients in `NODE_ENV=production`.
 
 ### Dependencies
 
-- Run `pnpm install` with lockfile; review dependency changes in PRs.
-- No eval, `Function()`, or dynamic `require` from user input.
+- `pnpm install` with lockfile; review dependency changes in PRs.
+- No `eval`, `Function()`, or dynamic `require` from user input.
 
 ## Forbidden patterns
 
 - Committing `.env`, API keys, `SUPABASE_SERVICE_ROLE`, or `JWT_SECRET`.
-- Logging request bodies containing passwords or payment data.
-- Trusting client-sent `userId` / `role` without server-side session verification.
+- Logging request bodies that contain passwords or payment data.
 - `NEXT_PUBLIC_` prefix on secrets.
-- Disabling validation or CORS “temporarily” in merged code.
-- Returning stack traces to clients in production (`NODE_ENV=production`).
+- Disabling validation or CORS "temporarily" in merged code.
+- Returning stack traces to clients in production.
 
 ## Implementation expectations
 
-- New endpoints handling PII: document data retention and access in PR description.
-- File uploads: validate MIME/size, store outside web root, scan if required by domain.
+- New endpoints handling PII: document data retention and access in the PR description.
+- File uploads: validate MIME and size, store outside the web root, scan if the domain requires it.
 - Webhooks: verify signatures (Stripe, etc.) before processing.
-- CSRF: use SameSite cookies or anti-CSRF tokens when using cookie sessions.
-
-## Consistency expectations
-
-- Security-related env additions update `.env.example` and `env.validation.ts` together.
-- Align with `api-design.mdc` for error responses — no internal detail leakage.
+- CSRF: SameSite cookies or anti-CSRF tokens when using cookie sessions.
 
 ## Examples
 
-**Good — guard + service check**
+**Good — guard + service-side check**
 
 ```typescript
 @UseGuards(JwtAuthGuard)
@@ -89,7 +88,7 @@ findOne(@Param('id') id: string, @CurrentUser() user: AuthUser) {
 ```typescript
 @Post()
 create(@Body() dto: CreateOrderDto) {
-  return this.service.create(dto.userId); // ❌ userId from body
+  return this.service.create(dto.userId); // userId from body
 }
 ```
 

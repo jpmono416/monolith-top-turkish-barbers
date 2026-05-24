@@ -86,8 +86,8 @@ One vocabulary across repos, env vars, APIs, and DB so humans and AI agents infe
 
 ## Consistency expectations
 
-- Match existing `health` feature naming before inventing alternate patterns.
-- Git branches: `feature/`, `fix/`, `chore/` prefixes (team convention).
+- Reference implementation matching is owned by `agent-behaviour.mdc`.
+- Git branches: `feature/`, `fix/`, `chore/` prefixes.
 
 ## Examples
 

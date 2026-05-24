@@ -38,7 +38,7 @@ Keep local development aligned with production containers: reproducible infra, h
 
 ### Dockerfiles
 
-- Base: `node:22-alpine`, pnpm via corepack (`pnpm@9.15.9`).
+- Base: `node:22-alpine`, pnpm via corepack — version pinned by `monorepo.mdc` (toolchain).
 - **development** target: minimal COPY for layer cache; full repo mounted via volumes in compose.
 - **production** target: `pnpm install --frozen-lockfile`, `pnpm db:generate`, app build, `CMD` runs compiled output (`node dist/main.js` for API).
 
@@ -52,7 +52,7 @@ Keep local development aligned with production containers: reproducible infra, h
 - Committing `.env` or secrets into images.
 - Running `pnpm install` inside containers without understanding volume mounts on Windows (can corrupt host `node_modules`).
 - Using both full Docker app services **and** host `pnpm dev` simultaneously without a healthy root `node_modules` from host `pnpm install`.
-- Removing healthchecks to “speed up” startup — apps must `depends_on: condition: service_healthy`.
+- Removing healthchecks to "speed up" startup — apps must `depends_on: condition: service_healthy`.
 - Ad-hoc `latest` tags for Postgres/Redis in production deploy configs — pin major versions (16, 7).
 
 ## Implementation expectations
@@ -82,5 +82,5 @@ api:
 **Bad — hardcoded localhost in api service environment**
 
 ```yaml
-DATABASE_URL: postgresql://...@localhost:5432/...  # ❌ inside api container use postgres hostname
+DATABASE_URL: postgresql://...@localhost:5432/...  # inside api container use postgres hostname
 ```

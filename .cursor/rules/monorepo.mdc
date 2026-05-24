@@ -29,12 +29,13 @@ packages:
 - **Apps** depend on packages via `workspace:*`.
 - **Packages** depend on other packages via `workspace:*` — never duplicate version pins for internal deps.
 
-### Package manager
+### Toolchain (canonical)
 
-- `packageManager`: `pnpm@9.15.9` in root `package.json`
-- `engines.node`: `>=22.0.0`
+- `packageManager`: `pnpm@9.15.9` in root `package.json`.
+- `engines.node`: `>=22.0.0`.
+- Docker base images, CI runners, and Railway/Vercel build images must match — flag any drift.
 - Install: `pnpm install` at repo root only — not `npm install` / `yarn` in apps.
-- CI: `pnpm install --frozen-lockfile`
+- CI: `pnpm install --frozen-lockfile`.
 
 ### Turbo tasks
 

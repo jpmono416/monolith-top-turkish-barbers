@@ -10,14 +10,14 @@ alwaysApply: false
 
 ## Purpose
 
-Keep HTTP interfaces consistent, typed, and evolvable across web, mobile, and third-party consumers.
+Keep HTTP interfaces consistent, typed, and evolvable across web, mobile, and third-party consumers. Implementation wiring (controllers, validation pipe, exceptions) lives in `backend.mdc`. Casing rules (route segments, JSON keys) live in `naming.mdc`.
 
 ## Required patterns
 
 ### URL structure
 
 - Base path: `/api` (global prefix in NestJS).
-- Resource-oriented paths: plural nouns, kebab-case segments.
+- Resource-oriented paths, plural nouns, kebab-case (see `naming.mdc`).
 
 ```
 GET    /api/health
@@ -29,7 +29,7 @@ DELETE /api/orders/:id
 ```
 
 - Nested resources only when ownership is clear: `/api/orders/:orderId/items`.
-- No verbs in paths (`/api/getOrders` ❌).
+- No verbs in paths (`/api/getOrders` is wrong).
 
 ### HTTP methods & status codes
 
@@ -50,9 +50,9 @@ DELETE /api/orders/:id
 ### Request/response contracts
 
 - **Shared response types** in `@monolith/types` (e.g. `ApiHealthResponse`, `PaginatedResponse<T>`, `ApiErrorResponse`).
-- **Request DTOs** in `apps/api/src/features/<feature>/dto/` with validation decorators.
-- Response bodies are JSON; use camelCase property names in JSON.
-- Paginated lists use `PaginatedResponse<T>` shape:
+- **Request DTOs** in `apps/api/src/features/<feature>/dto/` with validation decorators (DTO impl in `backend.mdc`).
+- JSON properties use camelCase (see `naming.mdc`).
+- Paginated lists use `PaginatedResponse<T>`:
 
 ```typescript
 {
@@ -63,7 +63,7 @@ DELETE /api/orders/:id
 
 ### Error responses
 
-Nest default filter shape — align with `ApiErrorResponse`:
+Align with `ApiErrorResponse`:
 
 ```json
 {
@@ -73,33 +73,33 @@ Nest default filter shape — align with `ApiErrorResponse`:
 }
 ```
 
-- `message` is human-readable; safe for UI display.
-- Do not include internal codes, SQL, or stack traces.
+- `message` is human-readable and safe for UI display.
+- Do not include internal codes, SQL, or stack traces — see `security.mdc`.
 
 ### Versioning
 
 - No URL version prefix until a breaking change requires it (`/api/v1/...`).
-- Prefer backward-compatible additions (new optional fields) over breaking changes.
+- Prefer backward-compatible additions (new optional fields).
 
 ## Forbidden patterns
 
-- Returning raw Prisma entities with sensitive fields (`passwordHash`, internal flags).
-- Inconsistent pagination (`limit/offset` in one endpoint, `page/size` in another) — use `meta` from `PaginatedResponse`.
-- `200` with `{ success: false }` instead of proper HTTP error status.
-- Mixed naming (`snake_case` in JSON, `camelCase` in TypeScript types exposed to clients).
+- Returning raw Prisma entities with sensitive fields — see `security.mdc`.
+- Inconsistent pagination (`limit/offset` vs `page/size`) — use `PaginatedResponse`.
+- `200` with `{ success: false }` instead of a proper HTTP error status.
+- Mixed casing (`snake_case` JSON, `camelCase` TS) on the wire.
 - Duplicate type definitions in API and `@monolith/types`.
 
 ## Implementation expectations
 
 - Controller method return types are explicit (`Promise<OrderSummary>` or sync where trivial).
 - Query DTOs for filters (`?page=1&pageSize=20`) with validated defaults.
-- `POST` returns `201` + `Location` header when creating addressable resources (optional but preferred).
-- Idempotent `PUT`/`DELETE` where applicable.
+- `POST` returns `201` + `Location` header when creating addressable resources (preferred).
+- Idempotent `PUT` / `DELETE` where applicable.
 
 ## Consistency expectations
 
 - Web `lib/` functions mirror API paths (`/api/health` → `getApiHealth`).
-- OpenAPI/Swagger — add only when team adopts it project-wide; until then types in `@monolith/types` are the contract.
+- OpenAPI/Swagger — add only when adopted project-wide. Until then `@monolith/types` is the contract.
 
 ## Examples
 
@@ -131,6 +131,6 @@ export type ApiErrorResponse = {
 ```typescript
 @Get(':id')
 findOne(@Param('id') id: string) {
-  return this.prisma.user.findUnique({ where: { id } }); // ❌ may include passwordHash
+  return this.prisma.user.findUnique({ where: { id } }); // may include passwordHash
 }
 ```

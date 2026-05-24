@@ -1,5 +1,5 @@
 ﻿---
-description: Monolith platform architecture — layers, boundaries, and module structure
+description: Monolith platform architecture — layers, boundaries, and feature structure
 globs:
   - "apps/**"
   - "packages/**"
@@ -11,7 +11,7 @@ alwaysApply: false
 
 ## Purpose
 
-Define how the Monolith AI-Native Engineering Platform is structured so every app and package stays predictable, independently buildable, and free of architectural drift.
+Define the layout, layer boundaries, and dependency direction. Implementation details live in `backend.mdc` and `frontend.mdc`.
 
 ## Required patterns
 
@@ -21,10 +21,10 @@ Define how the Monolith AI-Native Engineering Platform is structured so every ap
 |-------|----------|----------------|
 | Apps | `apps/web`, `apps/api`, `apps/mobile` | Deployable applications only |
 | Shared packages | `packages/*` | Cross-app code (UI, types, config, tooling) |
-| Data | `prisma/schema.prisma` (repo root) | Single source of truth for DB schema |
+| Data | `prisma/schema.prisma` | Single source of truth for DB schema |
 | Infra assets | `infrastructure/` | Dockerfiles, Railway/Vercel config — not runtime code |
 
-### API (NestJS) structure
+### API top-level structure
 
 ```
 apps/api/src/
@@ -35,22 +35,12 @@ apps/api/src/
   app.module.ts
 ```
 
-- **Feature modules** live under `apps/api/src/features/<feature>/`.
-- **Infrastructure** lives under `apps/api/src/infrastructure/` — shared technical capabilities, not business rules.
-- Register new features in `app.module.ts`; register new infra modules in `app.module.ts` or the feature module that owns them.
+- **Feature modules** live under `apps/api/src/features/<feature>/`. Anatomy and impl rules: `backend.mdc`.
+- **Infrastructure** is shared technical capability, not business rules.
+- **Config** is typed env loading. Not infrastructure.
+- Do not create new top-level folders under `apps/api/src/` — extend one of the three above.
 
-### Dependency direction (strict)
-
-```
-features → infrastructure → config
-features → @monolith/types, @monolith/config
-apps → packages (never packages → apps)
-```
-
-- Features **must not** import other features directly. Share via `@monolith/types`, a shared service in infrastructure, or extract a package.
-- `packages/*` **must not** import from `apps/*`.
-
-### Web (Next.js) structure
+### Web top-level structure
 
 ```
 apps/web/src/
@@ -59,34 +49,36 @@ apps/web/src/
   components/       # App-specific components (prefer @monolith/ui for shared UI)
 ```
 
-- Pages and layouts stay thin; orchestration belongs in `lib/` or Server Components.
-- API calls to the backend go through typed helpers in `lib/` (e.g. `lib/api.ts`), not ad-hoc `fetch` in every page.
+- Pages and layouts stay thin; orchestration belongs in `lib/` or Server Components. Impl rules: `frontend.mdc`.
+
+### Dependency direction (strict)
+
+```
+features → infrastructure → config
+features → @monolith/types, @monolith/config
+apps → packages          (never packages → apps)
+```
+
+- Features **must not** import other features. Share via `@monolith/types`, an infrastructure module, or extract a package.
+- `packages/*` **must not** import from `apps/*`.
 
 ### Shared contracts
 
-- HTTP request/response shapes shared between web and API belong in `@monolith/types`.
-- App constants and env-derived config keys belong in `@monolith/config`.
+- HTTP request/response shapes shared between web and API → `@monolith/types`. Format rules: `api-design.mdc`.
+- App constants and env-derived config keys → `@monolith/config`.
 
 ## Forbidden patterns
 
-- Business logic in controllers, route handlers, or React components (delegate to services / `lib/` helpers).
+- Business logic in controllers, route handlers, or React components — delegate to services / `lib/` helpers.
 - Raw SQL or alternate ORMs — use Prisma only.
 - Circular imports between feature modules.
 - Duplicating types in `apps/web` and `apps/api` when they represent the same API contract.
-- “Utils” packages that become dumping grounds — prefer feature colocation or `@monolith/types`.
-- Creating new top-level folders under `apps/api/src/` without aligning with `config/`, `features/`, or `infrastructure/`.
+- Catch-all packages (`utils`, `helpers`, `common`) — prefer feature colocation or a domain-named package.
 
 ## Implementation expectations
 
-- Each feature module is self-contained: `*.module.ts`, `*.controller.ts`, `*.service.ts`, DTOs colocated in the feature folder.
-- Global API prefix is `/api` (set in `main.ts`); routes are relative to that (e.g. controller `@Controller('health')` → `/api/health`).
 - New persistence requires a Prisma model + migration before service code ships.
-- Async work that outlives the HTTP request uses BullMQ processors in the owning feature or `infrastructure/queue/`.
-
-## Consistency expectations
-
-- Match the existing `health` feature as the template for new API features.
-- When adding a web surface for an API feature, add types to `@monolith/types` first, then API, then web consumer.
+- Async work that outlives the HTTP request → BullMQ processor in the owning feature or `infrastructure/queue/`.
 - Mobile (`apps/mobile`) follows the same package imports and API contracts as web.
 
 ## Examples
@@ -107,7 +99,7 @@ export class OrdersModule {}
 
 ```typescript
 // apps/api/src/features/orders/orders.service.ts
-import { UsersService } from '../users/users.service'; // ❌ cross-feature import
+import { UsersService } from '../users/users.service'; // cross-feature import
 ```
 
 **Good — shared API type**
