@@ -20,8 +20,6 @@ Machine- and human-readable assets for AI-native development. Pair with `docs/` 
 | `spec-lifecycle.md` | Spec states and change control |
 | `release-lifecycle.md` | Merge → production |
 
-Legacy: `feature-implementation.md` (short checklist) — prefer `docs/workflows/` + prompts above.
-
 ## Standards (`.ai/standards/`)
 
 - `ai-agent-guidelines.md` — agent rules of engagement

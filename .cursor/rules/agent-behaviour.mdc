@@ -39,7 +39,7 @@ Make AI-assisted changes predictable, reviewable, and aligned with the rule set 
 ### Git & PRs
 
 - Do **not** commit, push, or open PRs unless the user explicitly asks.
-- When asked for a PR: include the test plan from `docs/workflows/development.md`.
+- When asked for a PR: include the test plan from `docs/workflows/pull-request-workflow.md`.
 
 ### Questions vs assumptions
 

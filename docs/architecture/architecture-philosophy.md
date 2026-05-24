@@ -33,11 +33,13 @@ For non-trivial choices, add a short note to the technical spec:
 
 ## Reference implementation
 
-Copy patterns from:
+Copy patterns from the [health reference implementation](./canonical-vocabulary.md#code-structure-terms):
 
 - API: `apps/api/src/features/health/`
-- Web: `apps/web/src/app/page.tsx`, `apps/web/src/lib/api.ts`
+- Web client: `apps/web/src/lib/api.ts`
 - Rules: `.cursor/rules/architecture.mdc` (enforced in IDE)
+
+App Router page conventions (thin pages, `loading.tsx`, `error.tsx`) live in `.cursor/rules/frontend.mdc`.
 
 ## Related docs
 
