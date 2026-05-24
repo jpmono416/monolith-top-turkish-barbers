@@ -41,7 +41,10 @@ Copy patterns from:
 
 ## Related docs
 
-- `engineering-philosophy.md` — governance and AI rules
+- `engineering-philosophy.md` — operational constitution and AI rules
+- `platform-evolution-strategy.md` — how this structure evolves (or doesn't) over time
+- `abstraction-governance.md` — when to abstract and when to repeat
+- `ai-governance.md` — AI autonomy boundaries
 - `canonical-vocabulary.md` — terminology
 - `monorepo-standards.md`, `backend-standards.md`, `frontend-standards.md`, `infrastructure-standards.md`
 - `overview.md` — structural map

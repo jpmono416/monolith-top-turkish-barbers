@@ -186,6 +186,9 @@ These hold even when the team, models, or product change.
 ## Related
 
 - `[architecture-philosophy.md](./architecture-philosophy.md)` — structural rules
+- `[platform-evolution-strategy.md](./platform-evolution-strategy.md)` — how this constitution holds across time
+- `[abstraction-governance.md](./abstraction-governance.md)` — when to abstract and when to repeat
+- `[ai-governance.md](./ai-governance.md)` — AI autonomy boundaries
 - `[canonical-vocabulary.md](./canonical-vocabulary.md)` — terminology
 - `[overview.md](./overview.md)` — repo map
 - `[../standards/coding-standards.md](../standards/coding-standards.md)` — code quality bar
