@@ -36,3 +36,7 @@ Agent prompts, workflows, and templates: [.ai/](../.ai/)
 ## Architecture map
 
 [architecture/overview.md](./architecture/overview.md) — repo layout summary.
+
+[architecture/canonical-vocabulary.md](./architecture/canonical-vocabulary.md) — terminology used across `docs/`, `.cursor/rules/`, and `.ai/`.
+
+[architecture/repository-boundaries.md](./architecture/repository-boundaries.md) — where `docs/`, `.ai/`, and rules each belong.

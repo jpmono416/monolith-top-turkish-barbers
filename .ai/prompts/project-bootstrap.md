@@ -30,7 +30,7 @@ Your job is to implement production-grade software following platform standards 
 - Schema: `prisma/schema.prisma` (repo root)
 - Shared types: `@monolith/types`
 - Global API prefix: `/api`
-- Reference feature: `health`
+- Reference implementation: `health` API feature, `apps/web/src/lib/api.ts`
 
 ## Rules (non-negotiable)
 

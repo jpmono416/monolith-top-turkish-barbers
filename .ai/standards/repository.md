@@ -16,6 +16,7 @@ Canonical template for Monolith AI-native projects.
 | Area | Path |
 |------|------|
 | Human workflows | `docs/` |
+| Canonical vocabulary | `docs/architecture/canonical-vocabulary.md` |
 | Agent prompts | `.ai/prompts/` |
 | IDE enforcement | `.cursor/rules/*.mdc` |
 

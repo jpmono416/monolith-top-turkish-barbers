@@ -27,7 +27,7 @@ How humans and agents execute work on this platform without architectural drift.
 
 ## Scope rules
 
-- Implement exactly what the spec/plan says
+- Implement exactly what the technical spec and implementation plan say
 - Smallest correct diff
 - No drive-by refactors
 - No new libraries without justification

@@ -14,6 +14,7 @@ Deliver **production-grade**, **spec-aligned** changes with **minimal scope** an
 | API | `backend.mdc`, `api-design.mdc`, `architecture.mdc` |
 | Web | `frontend.mdc` |
 | Ops | `docker.mdc`, `infra.mdc`, `security.mdc` |
+| Vocabulary | `docs/architecture/canonical-vocabulary.md` |
 | Human docs | `docs/workflows/ai-implementation-workflow.md` |
 
 ## Workflow

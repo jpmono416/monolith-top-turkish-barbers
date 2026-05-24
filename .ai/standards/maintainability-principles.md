@@ -7,7 +7,7 @@ Long-term health for humans and AI agents across many projects cloned from this 
 - Same folder shapes in every Monolith repo
 - Same package scope `@monolith/*`
 - Same implementation order: types → DB → API → UI
-- Reference features (`health`) over ad-hoc examples
+- Health reference implementation (`health` API feature, `lib/api.ts`) over ad-hoc examples
 
 ## Locality
 

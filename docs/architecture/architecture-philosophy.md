@@ -41,5 +41,7 @@ Copy patterns from:
 
 ## Related docs
 
+- `engineering-philosophy.md` — governance and AI rules
+- `canonical-vocabulary.md` — terminology
 - `monorepo-standards.md`, `backend-standards.md`, `frontend-standards.md`, `infrastructure-standards.md`
 - `overview.md` — structural map

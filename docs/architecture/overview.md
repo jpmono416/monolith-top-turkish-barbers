@@ -36,7 +36,10 @@ Docker Compose runs the same services as production (Postgres, Redis, API, Web) 
 
 | Topic | Doc |
 |-------|-----|
-| Philosophy | [architecture-philosophy.md](./architecture-philosophy.md) |
+| Engineering philosophy | [engineering-philosophy.md](./engineering-philosophy.md) |
+| Architecture philosophy | [architecture-philosophy.md](./architecture-philosophy.md) |
+| Canonical vocabulary | [canonical-vocabulary.md](./canonical-vocabulary.md) |
+| Repository boundaries | [repository-boundaries.md](./repository-boundaries.md) |
 | Monorepo | [monorepo-standards.md](./monorepo-standards.md) |
 | Backend | [backend-standards.md](./backend-standards.md) |
 | Frontend | [frontend-standards.md](./frontend-standards.md) |
