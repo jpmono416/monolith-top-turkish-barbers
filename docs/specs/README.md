@@ -16,11 +16,13 @@ Use separate files for product, technical, and plan when complexity warrants it:
 
 ## Templates
 
-| Purpose | Template |
-|---------|----------|
-| Product | [product-spec-template.md](./product-spec-template.md) |
-| Technical | [technical-spec-template.md](./technical-spec-template.md) |
+
+| Purpose        | Template                                                             |
+| -------------- | -------------------------------------------------------------------- |
+| Product        | [product-spec-template.md](./product-spec-template.md)               |
+| Technical      | [technical-spec-template.md](./technical-spec-template.md)           |
 | Implementation | [implementation-plan-template.md](./implementation-plan-template.md) |
+
 
 ## Lifecycle
 

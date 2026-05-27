@@ -11,8 +11,8 @@ What user or business problem does this solve? One paragraph. Include who is aff
 
 ## Goals
 
-- [ ] Measurable outcome 1
-- [ ] Measurable outcome 2
+- Measurable outcome 1
+- Measurable outcome 2
 
 ## Non-goals
 
@@ -22,9 +22,11 @@ Explicitly out of scope for this iteration:
 
 ## Users & scenarios
 
+
 | Persona | Scenario | Success signal |
-|---------|----------|----------------|
-| … | … | … |
+| ------- | -------- | -------------- |
+| …       | …        | …              |
+
 
 ## Requirements
 
@@ -52,18 +54,20 @@ Explicitly out of scope for this iteration:
 
 Testable from product perspective (before implementation detail):
 
-- [ ] Given … when … then …
-- [ ] …
+- Given … when … then …
+- …
 
 ## Dependencies & risks
 
-| Item | Type | Mitigation |
-|------|------|------------|
-| … | technical / legal / third-party | … |
+
+| Item | Type                            | Mitigation |
+| ---- | ------------------------------- | ---------- |
+| …    | technical / legal / third-party | …          |
+
 
 ## Open questions
 
-- [ ] …
+- …
 
 ## Handoff to engineering
 
