@@ -1,44 +1,113 @@
-Refactor code on the Monolith platform without changing external behaviour.
+Perform a behaviour-preserving refactor within the Monolith platform.
+
+The objective is:
+
+- improve maintainability
+- improve clarity
+- reduce justified duplication
+- strengthen repository coherence
+
+WITHOUT:
+
+- changing external behaviour
+- introducing architectural drift
+- increasing unnecessary complexity
+
+---
 
 ## Preconditions
 
-- Existing tests pass before starting
-- Clear goal: rename, extract, reduce duplication, improve boundaries
-- If behaviour change is needed, treat as feature or bugfix — not refactor
+Before refactoring:
 
-## Process
+- identify the exact improvement goal
+- define what behaviour must remain unchanged
+- inspect existing repository patterns
+- verify refactor scope is operationally justified
 
-1. State invariant: what must stay the same (API contracts, DB schema, UX)
-2. Run baseline: `pnpm test` (and E2E if touch web flows)
-3. Refactor in small commits mentally — one concern per PR
-4. Re-run full PR gate after each logical step
+If behaviour changes are required:  
+treat the work as:
 
-## Allowed
+- feature implementation  
+or
+- bugfix
 
-- Rename with consistent updates across workspace
-- Move code between files within same feature
-- Extract to `@monolith/types` or `@monolith/ui` when duplication is proven
+NOT:
 
-## Forbidden
+- refactor
 
-- Cross-feature coupling introduced for convenience
-- Behaviour change smuggled in without spec
-- Disabling tests or types
-- New abstraction layers for one call site
+---
 
-## Architecture review trigger
+## Refactor principles
 
-If refactor touches:
+Prefer:
 
-- Multiple features
-- `infrastructure/`
-- Prisma schema
-- Public API shapes
+- small safe improvements
+- explicit structures
+- predictable patterns
+- localised changes
+- repository consistency
 
-Run `.ai/prompts/architecture-review.md` checklist first.
+Avoid:
 
-## Deliverable
+- speculative abstractions
+- architecture redesign
+- parallel systems
+- unnecessary package extraction
+- refactoring for aesthetics alone
 
-- Invariant stated
-- What improved (maintainability metric: clarity, boundary, duplication)
-- Test evidence (same tests green)
+Repetition is acceptable until abstraction becomes operationally justified.
+
+---
+
+## Governance expectations
+
+If the refactor impacts:
+
+- public contracts
+- infrastructure assumptions
+- multiple architectural boundaries
+- shared operational patterns
+
+perform an architecture review first.
+
+If uncertainty exists:  
+preserve stability and escalate concerns instead of expanding scope.
+
+---
+
+## Verification expectations
+
+Verify:
+
+- behaviour remains unchanged
+- repository consistency preserved
+- validation/build commands still pass
+- no unrelated areas unintentionally changed
+
+Testing depth should remain proportional to operational risk.
+
+---
+
+## Completion output
+
+## Refactor goal
+
+What was improved
+
+## Behaviour preserved
+
+What intentionally remained unchanged
+
+## Verification
+
+How stability was verified
+
+## Operational observations
+
+Any:
+
+- repeated patterns
+- future risks
+- abstraction observations
+- governance concerns
+

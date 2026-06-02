@@ -1,66 +1,96 @@
-Perform an architecture review on proposed or existing Monolith platform changes.
+Perform a conservative architecture review on proposed or existing Monolith platform changes.
 
-## Review checklist
+The goal is:
 
-### Boundaries
+- preserve operational simplicity
+- preserve maintainability
+- preserve repository coherence
+- detect unnecessary complexity
+- detect architectural drift
 
-- [ ] Feature code under `apps/api/src/features/<name>/`
-- [ ] No imports between features
-- [ ] Shared contracts in `@monolith/types`
-- [ ] Packages do not import apps
+The platform is highly opinionated by default, but controlled deviations may be acceptable when operationally justified.
 
-### API
+Do NOT optimise for:
 
-- [ ] Routes under `/api`, kebab-case plural
-- [ ] DTOs validated; types aligned with `@monolith/types`
-- [ ] Errors use Nest HTTP exceptions; no internal leakage
+- theoretical scalability
+- enterprise architecture
+- speculative infrastructure
+- abstraction purity
 
-### Data
+---
 
-- [ ] Prisma schema change has migration plan
-- [ ] `DIRECT_URL` considered for migrate deploy
-- [ ] Indexes match query patterns
+## Review areas
 
-### Async
+## Repository coherence
 
-- [ ] Long work uses BullMQ, not blocking HTTP
-- [ ] Jobs idempotent if retried
-- [ ] Queue names in `QUEUE_NAMES`
+- Existing patterns preserved where reasonable
+- No parallel architectural systems introduced
+- Naming aligns with canonical vocabulary
+- Repository boundaries remain clear
 
-### Web
+## Operational simplicity
 
-- [ ] Server Components default
-- [ ] Fetch centralised in `lib/`
-- [ ] UI shared via `@monolith/ui`
+- Complexity justified operationally
+- Infrastructure burden proportional to product needs
+- Cognitive overhead remains low
+- No speculative systems introduced
 
-### Security
+## Feature boundaries
 
-- [ ] Auth on sensitive routes
-- [ ] No secrets in repo or client bundles
-- [ ] New env in validation + `.env.example`
+- Features remain internally cohesive
+- Coupling remains intentional and understandable
+- Business logic placement remains appropriate
+- Shared code justified by repeated operational value
 
-### Ops
+## API and contracts
 
-- [ ] CI still passes (lint, typecheck, test, build, E2E)
-- [ ] Docker/compose impact documented if any
-- [ ] Deploy order considered (migrate → API → web)
+- Public behaviour explicit and predictable
+- Validation and error handling appropriate
+- Contracts consistent with existing patterns
 
-## Output format
+## Infrastructure and deployment
 
-```markdown
+- Deployment assumptions remain simple
+- Environment handling remains explicit
+- Operational burden remains proportional
+
+## AI-agent maintainability
+
+- Implementation remains AI-readable
+- Patterns remain predictable
+- Governance consistency preserved
+- Existing conventions preferred over novelty
+
+---
+
+## Review output
+
 ## Verdict
+
 approve | approve with changes | reject
 
 ## Findings
-| Severity | Area | Issue | Recommendation |
-|----------|------|-------|----------------|
-| high/medium/low | ... | ... | ... |
 
-## Positive patterns
-- ...
 
-## Required before merge
-1. ...
-```
+| Severity | Area | Observation | Recommendation |
+| -------- | ---- | ----------- | -------------- |
 
-Reference: `docs/architecture/architecture-philosophy.md`, `.cursor/rules/architecture.mdc`
+
+## Operational risks
+
+- [Risk]
+- [Risk]
+
+## Governance observations
+
+- [Observation]
+- [Observation]
+
+## Complexity assessment
+
+Was unnecessary complexity introduced?
+
+- yes / no
+
+If yes:
+explain whether it is operationally justified.

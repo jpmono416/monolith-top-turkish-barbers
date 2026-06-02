@@ -1,55 +1,126 @@
-# Implementation Expectations
+# Implementation expectations
 
-What “done” means for any change in this platform.
+This document defines operational expectations for implementation work within the Monolith platform.
 
-## Code quality
+The objective is:
 
-- TypeScript strict; no unexplained `any`
-- Matches naming in `docs/standards/naming-conventions.md`
-- Follows feature module layout for API
-- Server Components default on web
+- maintainable delivery
+- predictable implementation
+- repository coherence
+- operational simplicity
+- AI-agent readability
 
-## Completeness
+This is NOT:
 
-| Change | Required |
-|--------|----------|
-| New API endpoint | DTO, service, controller, types if shared |
-| New model | Prisma migration before service code |
-| New env var | `.env.example`, validation, configuration |
-| New queue | `QUEUE_NAMES`, processor, idempotency note |
-| New business rule | Service unit test (happy + failure) |
-| Critical UI path | Playwright E2E |
+- rigid architectural enforcement
+- speculative engineering doctrine
+- infrastructure prescription
 
-## Verification commands
+Controlled deviations may be acceptable when operationally justified and explicitly approved.
 
-```bash
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm build
-```
+---
 
-Schema: `pnpm db:migrate` locally when models change.
+# Core expectations
 
-## Documentation
+Implementation should:
 
-- Update spec checklists in PR
-- Do not generate large unsolicited markdown files
-- Update `docs/workflows/development.md` only when local dev steps change
+- preserve repository consistency
+- prefer existing patterns
+- optimise for maintainability
+- remain operationally simple
+- minimise unnecessary cognitive overhead
+- favour explicit behaviour over clever abstractions
 
-## PR readiness
+The smallest correct diff wins.
 
-- CI-equivalent commands pass locally
-- No secrets in diff
-- Scope matches spec slice
+---
 
-## Anti-patterns
+# Architecture expectations
 
-- `// TODO: implement` in merged features
-- Empty catch blocks
-- `fetch` without typed helper in web
-- Instantiated Prisma outside `PrismaService`
+Implementation should:
 
-## Reference
+- follow existing repository boundaries
+- avoid parallel architectural systems
+- avoid speculative scalability
+- avoid premature abstraction
 
-`.cursor/rules/agent-behaviour.mdc`, `docs/standards/coding-standards.md`
+Repetition is acceptable until abstraction becomes operationally justified.
+
+Additional infrastructure must justify:
+
+- operational value
+- maintenance burden
+- cognitive cost
+
+---
+
+# AI-agent expectations
+
+AI agents should:
+
+- read relevant context before implementation
+- preserve existing implementation patterns
+- escalate architectural uncertainty
+- avoid autonomous governance changes
+- avoid uncontrolled drift
+
+If a deviation appears beneficial:
+
+- explain operational reasoning
+- explain tradeoffs
+- request approval before implementation
+
+---
+
+# Verification expectations
+
+Implementation work should include proportional verification.
+
+Potential verification includes:
+
+- linting
+- type checking
+- tests
+- build validation
+- manual flow verification
+
+Verification depth should remain proportional to:
+
+- implementation complexity
+- operational risk
+- validation importance
+
+Avoid unnecessary testing infrastructure.
+
+---
+
+# Documentation expectations
+
+Implementation work should:
+
+- preserve documentation consistency
+- update operational context when relevant
+- document important deviations
+- document reusable observations when valuable
+
+Documentation should remain:
+
+- lightweight
+- operational
+- maintainable
+
+Avoid governance bloat.
+
+---
+
+# Non-goals
+
+The platform does NOT optimise for:
+
+- theoretical architectural purity
+- enterprise process
+- speculative infrastructure
+- premature framework extraction
+- excessive abstraction
+- engineering aesthetics over operational outcomes
+

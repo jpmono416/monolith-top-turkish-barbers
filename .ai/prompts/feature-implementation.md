@@ -1,52 +1,179 @@
-Implement a feature on the Monolith platform from an approved spec.
+Implement an approved feature within the Monolith AI-Native Engineering Platform.
 
-## Inputs required
+Your role is to execute implementation work inside an existing governed operational system.
 
-- Product spec (if exists): `docs/specs/`
-- Technical spec with API table and data model
-- Implementation plan with current slice
+The objective is:
 
-If specs are missing, stop and ask for them or offer to draft from templates in `docs/specs/`.
+- production-grade implementation
+- operational simplicity
+- repository consistency
+- predictable delivery
+- low cognitive overhead
+- maintainable AI-readable code
 
-## Execution steps
+The goal is NOT:
 
-1. Read `.cursor/rules/` for: architecture, backend, frontend, api-design, naming, testing, security
-2. Copy patterns from `apps/api/src/features/health/` and `apps/web/src/lib/api.ts`
-3. Implement in order:
-   - `@monolith/types`
-   - `prisma/schema.prisma` + `pnpm db:migrate`
-   - `apps/api/src/features/<feature>/`
-   - `apps/web/src/lib/` + pages
-   - Vitest service tests; Playwright if critical UI path
-4. Update `.env.example` + `env.validation.ts` + `configuration.ts` for new env
-5. Run: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`
+- architectural reinvention
+- speculative scalability
+- infrastructure expansion
+- abstraction creation without operational justification
 
-## Scope
+---
 
-- Current plan slice only
-- No drive-by refactors
-- No new dependencies without clear need
+## Required implementation context
 
-## Module template
+Before implementation:
 
-See `.ai/templates/feature-module.md` and `feature-spec-template.md`.
+1. Read relevant product/project context
+2. Read relevant specifications
+3. Read relevant governance/rule files
+4. Inspect existing repository patterns
+5. Match existing implementation conventions
 
-## Forbidden
+Relevant context may exist in:
 
-- Cross-feature service imports
-- `process.env` outside config
-- Business logic in controllers or page components
-- Placeholder business logic
+- docs/project/
+- docs/specs/
+- docs/architecture/
+- .cursor/rules/
+- .ai/
 
-## Deliverable summary
+Read ONLY what is relevant to the current implementation slice.
 
-```
+Avoid unnecessary context loading.
+
+If required specifications are missing:
+
+- stop
+- request missing inputs
+- or offer to draft them from existing templates
+
+---
+
+## Execution principles
+
+Implementation should:
+
+- remain scoped to the current approved slice
+- preserve repository consistency
+- prefer existing patterns
+- prefer direct implementation
+- favour explicitness over abstraction
+- optimise for maintainability
+- preserve operational simplicity
+
+The smallest correct diff wins.
+
+Repetition is acceptable until abstraction becomes operationally justified.
+
+Avoid:
+
+- drive-by refactors
+- speculative infrastructure
+- unnecessary dependencies
+- introducing parallel architectural patterns
+- expanding scope beyond validation needs
+
+---
+
+## Architecture and governance
+
+Canonical governance lives in:
+
+- docs/architecture/
+- .cursor/rules/
+- .ai/
+
+Do NOT:
+
+- redefine governance during implementation
+- duplicate architectural doctrine
+- silently introduce deviations from platform conventions
+
+If a deviation appears operationally justified:
+
+- explain the reasoning
+- explain tradeoffs
+- explain maintenance implications
+- request approval BEFORE implementation
+
+Controlled deviations are acceptable.
+Uncontrolled drift is not.
+
+---
+
+## Implementation workflow
+
+Use existing repository patterns as the primary implementation reference.
+
+Potential references may include:
+
+- existing features
+- existing services
+- existing API patterns
+- existing frontend structures
+- existing environment/configuration patterns
+
+Follow repository conventions instead of inventing new structures.
+
+If implementation reveals:
+
+- repeated operational pain
+- reusable patterns
+- governance friction
+- abstraction opportunities
+
+Document observations appropriately.
+
+Do NOT autonomously introduce platform-wide abstractions.
+
+---
+
+## Verification expectations
+
+Before completion:
+
+- run relevant validation commands
+- verify linting/type safety
+- verify build integrity
+- verify behaviour for the implemented slice
+- verify no unrelated areas were unintentionally affected
+
+Testing depth should remain proportional to:
+
+- implementation complexity
+- operational risk
+- product validation goals
+
+Avoid unnecessary testing infrastructure.
+
+---
+
+## Implementation completion output
+
+Provide a concise operational summary including:
+
 ## Summary
-<capability delivered>
 
-## Verify
-<commands and URLs>
+What was implemented
 
-## Spec checklist
-<which plan items completed>
-```
+## Verification
+
+How behaviour was verified
+(commands, routes, flows, environments)
+
+## Scope completed
+
+Which implementation-plan items were completed
+
+## Operational observations
+
+Any:
+
+- friction encountered
+- architectural uncertainty
+- reusable pattern observations
+- governance concerns
+- potential future improvements
+
+Keep communication concise, explicit, and operationally focused.

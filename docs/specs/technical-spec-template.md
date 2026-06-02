@@ -21,17 +21,15 @@ One paragraph: what we build technically and how it maps to the product spec.
 
 ## Architecture impact
 
-
-| Layer                  | Change                 |
-| ---------------------- | ---------------------- |
-| `@monolith/types`      | …                      |
-| `apps/api` feature     | `features/<name>/`     |
-| `apps/web`             | routes, `lib/` helpers |
-| `apps/mobile`          | if applicable          |
-| `prisma/schema.prisma` | models, indexes        |
-| Queues                 | BullMQ job(s)          |
-| Infra / env            | new vars, compose, CI  |
-
+| Layer | Change |
+|-------|--------|
+| `@monolith/types` | … |
+| `apps/api` feature | `features/<name>/` |
+| `apps/web` | routes, `lib/` helpers |
+| `apps/mobile` | if applicable |
+| `prisma/schema.prisma` | models, indexes |
+| Queues | BullMQ job(s) |
+| Infra / env | new vars, compose, CI |
 
 ## Data model
 
@@ -47,21 +45,17 @@ One paragraph: what we build technically and how it maps to the product spec.
 
 Base path: `/api/<resource>` (global prefix `api` in `main.ts`).
 
-
 | Method | Path | Auth | Request | Response | Notes |
-| ------ | ---- | ---- | ------- | -------- | ----- |
-| GET    | …    | …    | …       | …        | …     |
-
+|--------|------|------|---------|----------|-------|
+| GET | … | … | … | … | … |
 
 Shared types live in `@monolith/types` — define before implementation.
 
 ## DTOs & validation
 
-
-| DTO          | Fields | Rules           |
-| ------------ | ------ | --------------- |
-| `CreateXDto` | …      | class-validator |
-
+| DTO | Fields | Rules |
+|-----|--------|-------|
+| `CreateXDto` | … | class-validator |
 
 ## Service logic
 
@@ -72,11 +66,9 @@ Shared types live in `@monolith/types` — define before implementation.
 
 ## Async / queues
 
-
 | Queue | Job name | Payload | Retries | Idempotent |
-| ----- | -------- | ------- | ------- | ---------- |
-| …     | …        | …       | 3       | yes/no     |
-
+|-------|----------|---------|---------|------------|
+| … | … | … | 3 | yes/no |
 
 ## Web / mobile
 
@@ -97,13 +89,11 @@ Shared types live in `@monolith/types` — define before implementation.
 
 ## Testing plan
 
-
-| Layer       | What to test                       |
-| ----------- | ---------------------------------- |
-| API service | happy + failure paths (Vitest)     |
-| Web `lib/`  | helpers if non-trivial             |
-| E2E         | critical user journey (Playwright) |
-
+| Layer | What to test |
+|-------|----------------|
+| API service | happy + failure paths (Vitest) |
+| Web `lib/` | helpers if non-trivial |
+| E2E | critical user journey (Playwright) |
 
 ## Rollout
 
@@ -113,5 +103,4 @@ Shared types live in `@monolith/types` — define before implementation.
 
 ## Open questions
 
-- …
-
+- [ ] …

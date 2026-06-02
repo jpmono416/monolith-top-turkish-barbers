@@ -1,27 +1,189 @@
-# Repository Standards
+# Repository standards
 
-Canonical template for Monolith AI-native projects.
+This document defines repository-level expectations within the Monolith AI-Native Engineering Platform.
 
-## Invariants
+The objective is:
 
-- Apps build independently via Turborepo (`pnpm build`)
-- Local infra via Docker Compose (`pnpm docker:up`) or postgres/redis + host `pnpm dev`
-- Env contract in `.env.example`; validated at API boot
-- Prisma schema at repo root `prisma/schema.prisma`
-- API prefix `/api`; features under `apps/api/src/features/`
-- Shared types `@monolith/types`; shared UI `@monolith/ui`
+- repository coherence
+- operational simplicity
+- maintainability
+- predictable AI-assisted implementation
+- low cognitive overhead
 
-## Documentation
+The platform is intentionally:
 
-| Area | Path |
-|------|------|
-| Human workflows | `docs/` |
-| Canonical vocabulary | `docs/architecture/canonical-vocabulary.md` |
-| Agent prompts | `.ai/prompts/` |
-| IDE enforcement | `.cursor/rules/*.mdc` |
+- highly opinionated
+- modular monolith oriented
+- AI-assisted
+- operationally pragmatic
 
-## PR gate
+This document defines repository expectations, not rigid architectural law.
 
-`pnpm lint`, `typecheck`, `test`, `build`, Playwright E2E on web changes.
+Controlled deviations may be acceptable when operationally justified and explicitly approved.
 
-See `docs/README.md` and `.ai/README.md` for navigation.
+---
+
+# Repository philosophy
+
+Repositories should optimise for:
+
+- fast product delivery
+- maintainability
+- implementation predictability
+- operational clarity
+- long-term coherence
+
+Repositories should avoid:
+
+- speculative scalability
+- unnecessary infrastructure
+- premature abstraction
+- enterprise organisational patterns
+- framework proliferation
+
+The platform exists to accelerate product delivery, not become the product itself.
+
+---
+
+# Repository structure expectations
+
+Repositories should:
+
+- preserve clear boundaries
+- maintain predictable structure
+- favour explicit organisation
+- minimise hidden coupling
+- avoid parallel architectural systems
+
+Structure should remain:
+
+- understandable
+- navigable
+- operationally lightweight
+
+Canonical terminology and boundaries are defined in:
+
+- docs/architecture/[canonical-vocabulary.md](http://canonical-vocabulary.md)
+- docs/architecture/[repository-boundaries.md](http://repository-boundaries.md)
+
+---
+
+# Shared code expectations
+
+Shared code should exist only when operationally justified.
+
+Potential shared packages may include:
+
+- configuration
+- UI primitives
+- typed contracts
+- operational tooling
+
+Shared code should:
+
+- reduce proven repeated operational pain
+- remain narrowly scoped
+- minimise cross-product coupling
+
+Avoid:
+
+- speculative shared frameworks
+- premature package extraction
+- shared business-domain abstractions
+
+Repetition is acceptable until abstraction becomes operationally justified.
+
+---
+
+# Feature expectations
+
+Features should:
+
+- remain internally cohesive
+- preserve understandable boundaries
+- avoid unnecessary cross-feature coupling
+- favour explicit behaviour
+
+Business logic placement should remain:
+
+- predictable
+- maintainable
+- easy to reason about
+
+Reference implementation structures may exist to guide consistency, but should not become rigid architectural doctrine.
+
+---
+
+# Infrastructure expectations
+
+Infrastructure should remain:
+
+- operationally proportional
+- easy to maintain
+- easy to deploy
+- understandable by AI agents
+
+Additional infrastructure must justify:
+
+- operational value
+- maintenance burden
+- cognitive overhead
+
+Avoid:
+
+- speculative infrastructure
+- infrastructure-first thinking
+- operational complexity without validation value
+
+---
+
+# AI-agent expectations
+
+Repositories should optimise for:
+
+- AI readability
+- predictable implementation patterns
+- explicit operational behaviour
+- stable governance boundaries
+
+AI agents should:
+
+- prefer existing patterns
+- avoid autonomous architecture redesign
+- preserve repository coherence
+- escalate justified deviations appropriately
+
+---
+
+# Documentation expectations
+
+Repository documentation should remain:
+
+- lightweight
+- operational
+- maintainable
+- high-signal
+
+Avoid:
+
+- governance duplication
+- overlapping documentation systems
+- speculative documentation structures
+- organisational theatre
+
+Canonical specifications belong in:
+
+- docs/specs/
+
+Operational governance belongs in:
+
+- docs/architecture/
+
+AI operational guidance belongs in:
+
+- .ai/
+
+Rule enforcement belongs in:
+
+- .cursor/rules/
+

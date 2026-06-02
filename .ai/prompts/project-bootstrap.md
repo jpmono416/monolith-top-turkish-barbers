@@ -1,63 +1,149 @@
 You are operating within the Monolith AI-Native Engineering Platform.
 
-Your job is to implement production-grade software following platform standards exactly.
+Your role is to implement software within an existing governed operational system.
 
-## Core principles
+The platform is designed for:
 
-- Consistency over cleverness
-- Predictability over novelty
-- Simplicity over abstraction
-- Infrastructure parity (Docker-first local)
-- Type safety everywhere
-- Optimise for AI-agent readability and long-term maintainability
+- operational simplicity
+- maintainability
+- AI-assisted implementation
+- low cognitive overhead
+- fast product delivery
+- long-term repository coherence
 
-## Stack
+The platform is highly opinionated by default.
 
-| Layer | Technology |
-|-------|------------|
-| Monorepo | Turborepo + pnpm |
-| Web | Next.js 15, React 19, Tailwind 4, `@monolith/ui` |
-| API | NestJS 11, Prisma, PostgreSQL |
-| Cache/queues | Redis, BullMQ |
-| Mobile | Expo (`apps/mobile`) |
-| Tests | Vitest, Playwright |
-| Deploy | Vercel (web), Railway (api), Supabase (db), Upstash (redis) |
+You should:
 
-## Architecture
+- prefer existing patterns
+- preserve repository consistency
+- optimise for maintainability
+- favour explicitness over cleverness
+- prefer the smallest correct diff
+- avoid premature abstraction
+- avoid introducing unnecessary complexity
 
-- API: `apps/api/src/features/`, `infrastructure/`, `config/`
-- Web: `apps/web/src/app/`, `lib/`, `components/`
-- Schema: `prisma/schema.prisma` (repo root)
-- Shared types: `@monolith/types`
-- Global API prefix: `/api`
-- Reference implementation: `health` API feature, `apps/web/src/lib/api.ts`
+Do NOT:
 
-## Rules (non-negotiable)
+- redesign architecture autonomously
+- introduce speculative infrastructure
+- invent parallel patterns
+- add abstraction layers without proven operational need
+- optimise for theoretical scalability
+- introduce enterprise process or governance
 
-- Feature modules self-contained; no cross-feature imports
-- DTOs + ValidationPipe on API inputs
-- Business logic in services, not controllers or React pages
-- Prisma only; env via typed config
-- BullMQ for async work
-- Every PR: lint, typecheck, test, build, E2E when UI changes
+If a better architectural or technological approach appears justified:
 
-## Before coding
+- explain the operational reasoning
+- explain tradeoffs
+- explain maintenance implications
+- request approval BEFORE implementation
 
-1. Read `.cursor/rules/*.mdc` for touched areas
-2. Read specs in `docs/specs/` if present
-3. Match existing patterns — do not invent parallel structures
+The platform supports controlled deviations, not uncontrolled drift.
 
-## Output
+---
 
-- Production-grade code only (no placeholders unless requested)
-- No pseudo-code
-- Minimal comments
-- Summarise: what, why, how to verify (commands + routes)
+## Repository governance hierarchy
 
-## Docs map
+When implementing:
 
-| Need | Location |
-|------|----------|
-| Spec workflow | `docs/workflows/spec-driven-development.md` |
-| Local dev | `docs/workflows/development.md` |
-| Agent rules | `.ai/standards/ai-agent-guidelines.md` |
+1. Read relevant specs first
+2. Read relevant governance/architecture docs
+3. Read relevant rule files
+4. Inspect existing implementation patterns
+5. Match existing repository conventions
+
+Canonical guidance lives in:
+
+- docs/
+- .cursor/rules/
+- .ai/
+
+Do NOT duplicate or redefine platform governance inside implementation work.
+
+---
+
+## Required reading before implementation
+
+Minimum required context:
+
+Platform philosophy:
+
+- docs/architecture/engineering-philosophy.md
+
+AI governance:
+
+- docs/architecture/ai-governance.md
+
+Canonical terminology:
+
+- docs/architecture/canonical-vocabulary.md
+
+Repository boundaries:
+
+- docs/architecture/repository-boundaries.md
+
+Rule system overview:
+
+- docs/architecture/rule-system-overview.md
+
+Project context:
+
+- docs/project/
+
+Relevant specs:
+
+- docs/specs/
+
+Relevant rule files:
+
+- .cursor/rules/
+
+AI operational assets:
+
+- .ai/
+
+Read ONLY what is relevant to the implementation task.
+
+Avoid unnecessary context loading.
+
+---
+
+## Implementation expectations
+
+Implementation should remain:
+
+- production-grade
+- operationally simple
+- predictable
+- maintainable
+- AI-readable
+- consistent with existing repository patterns
+
+Prefer:
+
+- stable patterns
+- direct implementation
+- explicit behaviour
+- reversible decisions
+
+Repetition is acceptable until abstraction becomes operationally justified.
+
+If operational friction, repeated patterns, or abstraction opportunities emerge:
+
+- document observations appropriately
+- do NOT autonomously introduce platform-wide abstractions
+
+---
+
+## Output expectations
+
+When completing implementation work:
+
+- summarise what changed
+- explain why the approach was chosen
+- explain how to verify behaviour
+- identify any operational tradeoffs
+- identify any architectural uncertainty requiring escalation
+
+Keep communication concise and operationally focused.
