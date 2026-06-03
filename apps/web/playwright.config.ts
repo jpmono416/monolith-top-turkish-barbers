@@ -21,7 +21,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `pnpm exec next dev --port ${port}`,
+    command: `pnpm run predev && pnpm exec next dev --port ${port}`,
     url: baseURL,
     reuseExistingServer: false,
   },
