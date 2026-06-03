@@ -1,11 +1,20 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { BUSINESS } from '@/lib/business-content';
+import { BUSINESS, PLACEHOLDER_IMAGES } from '@/lib/business-content';
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[92svh] overflow-hidden sm:min-h-[88svh]">
+      <Image
+        src={PLACEHOLDER_IMAGES.hero}
+        alt=""
+        fill
+        priority
+        className="object-cover"
+        sizes="100vw"
+      />
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,_hsl(38_45%_22%_/_0.4),_transparent_50%),radial-gradient(ellipse_at_80%_20%,_hsl(38_30%_12%_/_0.25),_transparent_45%),linear-gradient(180deg,hsl(0_0%_6%)_0%,hsl(0_0%_3%)_100%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,_hsl(38_45%_22%_/_0.4),_transparent_50%),radial-gradient(ellipse_at_80%_20%,_hsl(38_30%_12%_/_0.25),_transparent_45%),linear-gradient(180deg,hsl(0_0%_6%_/_0.75)_0%,hsl(0_0%_3%_/_0.92)_100%)]"
         aria-hidden
       />
       <div

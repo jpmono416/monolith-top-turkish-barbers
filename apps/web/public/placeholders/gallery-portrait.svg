@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#4a3d5c"/>
+  <rect x="24" y="24" width="752" height="952" fill="none" stroke="#b8a0d4" stroke-width="4" stroke-dasharray="12 8"/>
+  <text x="400" y="470" text-anchor="middle" fill="#ede9f5" font-family="system-ui, sans-serif" font-size="40" font-weight="600">Gallery portrait</text>
+  <text x="400" y="530" text-anchor="middle" fill="#d8cff0" font-family="system-ui, sans-serif" font-size="32">800 × 1000 · 465</text>
+</svg>

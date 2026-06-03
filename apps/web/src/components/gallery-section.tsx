@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { GALLERY_ITEMS } from '@/lib/business-content';
 
 export function GallerySection() {
@@ -16,13 +17,26 @@ export function GallerySection() {
         </div>
 
         <ul className="mt-10 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-          {GALLERY_ITEMS.map((item, index) => (
+          {GALLERY_ITEMS.map((item) => (
             <li
               key={item.title}
-              className={`relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br ${item.accent} ${
-                index === 0 ? 'aspect-[16/9] sm:col-span-2 lg:col-span-2' : ''
+              className={`relative overflow-hidden rounded-2xl bg-muted ${
+                item.featured
+                  ? 'aspect-[16/9] sm:col-span-2 lg:col-span-2'
+                  : 'aspect-[4/5]'
               }`}
             >
+              <Image
+                src={item.image}
+                alt=""
+                fill
+                className="object-cover"
+                sizes={
+                  item.featured
+                    ? '(max-width: 1024px) 100vw, 66vw'
+                    : '(max-width: 1024px) 100vw, 33vw'
+                }
+              />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,hsl(0_0%_3%/_0.85)_100%)]" />
               <p className="font-display text-foreground absolute bottom-4 left-4 text-lg">
                 {item.title}

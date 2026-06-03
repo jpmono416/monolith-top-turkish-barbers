@@ -55,13 +55,20 @@ export const SERVICES = [
   },
 ] as const;
 
+/** Layout placeholders — replace with on-site photography. */
+export const PLACEHOLDER_IMAGES = {
+  hero: '/placeholders/hero.svg',
+  galleryWide: '/placeholders/gallery-wide.svg',
+  galleryPortrait: '/placeholders/gallery-portrait.svg',
+} as const;
+
 export const GALLERY_ITEMS = [
-  { title: 'Precision fade', accent: 'from-amber-900/40 to-zinc-950' },
-  { title: 'Hot towel ritual', accent: 'from-stone-700/50 to-zinc-950' },
-  { title: 'Beard sculpting', accent: 'from-yellow-900/30 to-zinc-950' },
-  { title: 'Classic cut', accent: 'from-neutral-600/40 to-zinc-950' },
-  { title: 'Shop interior', accent: 'from-amber-950/50 to-black' },
-  { title: 'Finishing detail', accent: 'from-zinc-600/40 to-zinc-950' },
+  { title: 'Precision fade', image: PLACEHOLDER_IMAGES.galleryWide, featured: true },
+  { title: 'Hot towel ritual', image: PLACEHOLDER_IMAGES.galleryPortrait },
+  { title: 'Beard sculpting', image: PLACEHOLDER_IMAGES.galleryPortrait },
+  { title: 'Classic cut', image: PLACEHOLDER_IMAGES.galleryPortrait },
+  { title: 'Shop interior', image: PLACEHOLDER_IMAGES.galleryPortrait },
+  { title: 'Finishing detail', image: PLACEHOLDER_IMAGES.galleryPortrait },
 ] as const;
 
 export const NAV_LINKS = [
