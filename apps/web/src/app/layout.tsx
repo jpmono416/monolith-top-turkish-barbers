@@ -1,16 +1,29 @@
 import type { Metadata } from 'next';
-import { APP_NAME } from '@monolith/config';
+import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
+import { BUSINESS } from '@/lib/business-content';
 import './globals.css';
 
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-cormorant',
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: APP_NAME,
-  description: 'Monolith AI-Native Engineering Platform',
+  title: `${BUSINESS.name} | Premium barbering in Shrewsbury`,
+  description: BUSINESS.description,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen antialiased">{children}</body>
+    <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }
