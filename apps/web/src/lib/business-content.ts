@@ -23,36 +23,13 @@ export const BUSINESS = {
 } as const;
 
 export const SERVICES = [
-  {
-    name: 'Signature Turkish Cut',
-    description: 'Scissor-and-clipper work finished with hot towel and styling.',
-    price: 'from £22',
-  },
-  {
-    name: 'Beard Sculpt & Line-up',
-    description: 'Shape, define, and condition — razor-sharp edges, natural finish.',
-    price: 'from £14',
-  },
-  {
-    name: 'Hot Towel Shave',
-    description: 'Classic straight-razor experience with aromatic oils and balm.',
-    price: 'from £18',
-  },
-  {
-    name: 'Skin Fade',
-    description: 'Seamless gradients, crisp lineup, and premium product finish.',
-    price: 'from £24',
-  },
-  {
-    name: 'Cut & Beard Combo',
-    description: 'Full groom — hair, beard, and hot towel in one visit.',
-    price: 'from £32',
-  },
-  {
-    name: 'Head Shave',
-    description: 'Smooth finish with hot towel prep and post-shave care.',
-    price: 'from £16',
-  },
+  { name: 'Hair cut', price: '£14' },
+  { name: 'Hot towel shave', price: '£18' },
+  { name: 'Hot steam', price: '£10' },
+  { name: 'Beard trim', price: '£10' },
+  { name: 'Skin fades', price: '£16' },
+  { name: 'Face mask', price: '£12' },
+  { name: 'Hot wax', price: '£8' },
 ] as const;
 
 /** Layout placeholders — replace with on-site photography. */

@@ -1,18 +1,16 @@
 import { BookingForm } from '@/components/booking-form';
+import { SectionHeading } from '@/components/section-heading';
 
 export function BookingSection() {
   return (
-    <section id="booking" className="border-border/40 border-t py-16 sm:py-24 lg:py-28">
+    <section id="booking" className="section-shell">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mx-auto max-w-xl text-center">
-          <p className="text-primary text-sm font-medium uppercase tracking-[0.3em]">Booking</p>
-          <h2 className="font-display text-foreground mt-3 text-4xl sm:text-5xl">
-            Request an appointment
-          </h2>
-          <p className="text-muted-foreground mt-4 text-lg leading-relaxed">
-            Select your preferred date first — your contact details will appear when you are ready.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Booking"
+          title="Request an appointment"
+          lead="Select your preferred date first — your contact details will appear when you are ready."
+          align="center"
+        />
 
         <BookingForm />
       </div>

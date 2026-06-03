@@ -1,16 +1,14 @@
+import { SectionHeading } from '@/components/section-heading';
 import { BUSINESS } from '@/lib/business-content';
 
 export function ContactSection() {
   return (
-    <section id="contact" className="border-border/40 border-t py-16 sm:py-24 lg:py-28">
+    <section id="contact" className="section-shell">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
           <div>
-            <p className="text-primary text-sm font-medium uppercase tracking-[0.3em]">Visit us</p>
-            <h2 className="font-display text-foreground mt-3 text-4xl sm:text-5xl">
-              Find the shop
-            </h2>
-            <address className="text-muted-foreground mt-6 space-y-1 text-lg not-italic leading-relaxed">
+            <SectionHeading eyebrow="Visit us" title="Find the shop" />
+            <address className="text-muted-foreground mt-5 space-y-1 text-base not-italic leading-relaxed sm:text-lg">
               <p>{BUSINESS.address.line1}</p>
               <p>
                 {BUSINESS.address.city}, {BUSINESS.address.postcode}

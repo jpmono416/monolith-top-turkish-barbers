@@ -4,7 +4,7 @@ import { BUSINESS, PLACEHOLDER_IMAGES } from '@/lib/business-content';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[92svh] overflow-hidden sm:min-h-[88svh]">
+    <section className="relative min-h-[80svh] overflow-hidden sm:min-h-[88svh] lg:min-h-[90svh]">
       <Image
         src={PLACEHOLDER_IMAGES.hero}
         alt=""
@@ -30,18 +30,18 @@ export function HeroSection() {
         aria-hidden
       />
 
-      <div className="relative mx-auto flex max-w-6xl min-h-[92svh] flex-col justify-end px-4 pb-20 pt-24 sm:min-h-[88svh] sm:px-6 sm:pb-24 sm:pt-32">
-        <p className="text-primary mb-3 text-xs font-medium uppercase tracking-[0.28em] sm:mb-4 sm:text-sm sm:tracking-[0.35em]">
+      <div className="relative mx-auto flex max-w-6xl min-h-[80svh] flex-col justify-end px-4 pb-14 pt-20 sm:min-h-[88svh] sm:px-6 sm:pb-20 sm:pt-24 lg:min-h-[90svh] lg:pt-28">
+        <p className="text-primary mb-2 text-xs font-medium uppercase tracking-[0.28em] sm:mb-3 sm:text-sm sm:tracking-[0.35em]">
           Shrewsbury · Turkish barbering
         </p>
-        <h1 className="font-display text-foreground max-w-3xl text-[2.5rem] leading-[1.05] sm:text-6xl lg:text-7xl">
+        <h1 className="font-display text-foreground max-w-3xl text-[2.25rem] leading-[1.05] sm:text-5xl lg:text-6xl">
           {BUSINESS.name}
         </h1>
-        <p className="text-muted-foreground mt-5 max-w-xl text-base leading-relaxed sm:mt-6 sm:text-xl">
+        <p className="text-muted-foreground mt-4 max-w-xl text-base leading-relaxed sm:mt-5 sm:text-lg">
           <span className="text-foreground font-medium">{BUSINESS.tagline}.</span>{' '}
           {BUSINESS.description}
         </p>
-        <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
+        <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
           <Link
             href="#booking"
             className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold tracking-wide transition-colors sm:min-h-0"

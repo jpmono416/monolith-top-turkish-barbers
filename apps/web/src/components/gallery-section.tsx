@@ -1,27 +1,25 @@
 import Image from 'next/image';
+import { SectionHeading } from '@/components/section-heading';
 import { GALLERY_ITEMS } from '@/lib/business-content';
 
 export function GallerySection() {
   return (
-    <section id="gallery" className="border-border/40 border-t py-16 sm:py-24 lg:py-28">
+    <section id="gallery" className="section-shell">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="max-w-2xl">
-          <p className="text-primary text-sm font-medium uppercase tracking-[0.3em]">Gallery</p>
-          <h2 className="font-display text-foreground mt-3 text-4xl sm:text-5xl">
-            The atmosphere
-          </h2>
-          <p className="text-muted-foreground mt-4 text-lg leading-relaxed">
-            A glimpse of the chair, the craft, and the finish — imagery to be refined with
-            on-site photography.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Gallery"
+          title="The atmosphere"
+          lead="A glimpse of the chair, the craft, and the finish — imagery to be refined with on-site photography."
+        />
 
-        <ul className="mt-10 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-          {GALLERY_ITEMS.map((item) => (
+        <ul className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+          {GALLERY_ITEMS.map((item) => {
+            const featured = 'featured' in item && item.featured;
+            return (
             <li
               key={item.title}
               className={`relative overflow-hidden rounded-2xl bg-muted ${
-                item.featured
+                featured
                   ? 'aspect-[16/9] sm:col-span-2 lg:col-span-2'
                   : 'aspect-[4/5]'
               }`}
@@ -32,7 +30,7 @@ export function GallerySection() {
                 fill
                 className="object-cover"
                 sizes={
-                  item.featured
+                  featured
                     ? '(max-width: 1024px) 100vw, 66vw'
                     : '(max-width: 1024px) 100vw, 33vw'
                 }
@@ -42,7 +40,8 @@ export function GallerySection() {
                 {item.title}
               </p>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </section>

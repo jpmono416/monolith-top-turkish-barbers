@@ -1,35 +1,34 @@
+import { SectionHeading } from '@/components/section-heading';
 import { SERVICES } from '@/lib/business-content';
 
 export function ServicesSection() {
   return (
-    <section id="services" className="border-border/40 border-t py-16 sm:py-24 lg:py-28">
+    <section id="services" className="section-shell">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="max-w-2xl">
-          <p className="text-primary text-sm font-medium uppercase tracking-[0.3em]">Services</p>
-          <h2 className="font-display text-foreground mt-3 text-4xl sm:text-5xl">
-            Crafted for every visit
-          </h2>
-          <p className="text-muted-foreground mt-4 text-lg leading-relaxed">
-            Walk-ins welcome. Appointment requests help us prepare your chair and hot towel.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Services"
+          title="Crafted for every visit"
+          lead="Walk-ins welcome. Appointment requests help us prepare your chair and hot towel."
+        />
 
-        <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
           {SERVICES.map((service) => (
-            <li
+            <article
               key={service.name}
-              className="border-border/60 bg-card/40 group rounded-2xl border p-6 transition-colors hover:border-primary/30"
+              className="service-card border-border/50 group flex min-h-[7.5rem] flex-col justify-between rounded-xl border p-4 transition-colors duration-300 hover:border-primary/35 sm:min-h-[8rem] sm:p-5"
             >
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="font-display text-foreground text-xl">{service.name}</h3>
-                <span className="text-primary shrink-0 text-sm font-medium">{service.price}</span>
-              </div>
-              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-                {service.description}
+              <h3 className="font-display text-foreground pr-2 text-base leading-snug sm:text-lg">
+                {service.name}
+              </h3>
+              <p
+                className="text-primary font-display mt-3 text-2xl tabular-nums tracking-tight sm:mt-4 sm:text-[1.75rem]"
+                aria-label={`Price: ${service.price}`}
+              >
+                {service.price}
               </p>
-            </li>
+            </article>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

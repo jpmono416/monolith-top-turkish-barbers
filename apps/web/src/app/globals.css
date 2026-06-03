@@ -75,6 +75,23 @@
     scroll-margin-top: var(--header-height);
   }
 
+  .section-shell {
+    border-top: 1px solid hsl(var(--border) / 0.4);
+    padding-block: 3rem;
+  }
+
+  @media (width >= 40rem) {
+    .section-shell {
+      padding-block: 4rem;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .section-shell {
+      padding-block: 5rem;
+    }
+  }
+
   :focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
@@ -117,6 +134,34 @@
 
 .animate-in {
   animation: booking-fade-in 0.5s ease-out forwards;
+}
+
+.service-card {
+  position: relative;
+  background: hsl(var(--card) / 0.45);
+}
+
+.service-card::before,
+.service-card::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+
+.service-card::before {
+  top: 0.625rem;
+  left: 0.625rem;
+  border-top: 1px solid hsl(var(--primary) / 0.4);
+  border-left: 1px solid hsl(var(--primary) / 0.4);
+}
+
+.service-card::after {
+  right: 0.625rem;
+  bottom: 0.625rem;
+  border-right: 1px solid hsl(var(--primary) / 0.4);
+  border-bottom: 1px solid hsl(var(--primary) / 0.4);
 }
 
 @media (prefers-reduced-motion: reduce) {
