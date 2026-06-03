@@ -4,7 +4,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "prebuild": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build",
     "build": "next build",
+    "predev": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build",
     "dev": "next dev --port 3000",
     "start": "next start --port 3000",
     "lint": "eslint .",

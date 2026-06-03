@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#5c4a32"/>
+  <rect x="32" y="32" width="1536" height="836" fill="none" stroke="#d4a574" stroke-width="4" stroke-dasharray="12 8"/>
+  <text x="800" y="420" text-anchor="middle" fill="#f5e6d3" font-family="system-ui, sans-serif" font-size="48" font-weight="600">Gallery wide</text>
+  <text x="800" y="490" text-anchor="middle" fill="#e8d5bc" font-family="system-ui, sans-serif" font-size="36">1600 × 900 · 1669</text>
+</svg>

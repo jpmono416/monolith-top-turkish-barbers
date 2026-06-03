@@ -1,6 +1,6 @@
 # Technical Spec: Top Turkish Barbers Demo Website
 
-> **Status:** approved  
+> **Status:** implemented  
 > **Product spec:** `2026-06-02-top-turkish-barbers-product.md`  
 > **Owner:** Ariel  
 > **Last updated:** 2026-06-02

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#3d4f5f"/>
+  <rect x="48" y="48" width="1824" height="984" fill="none" stroke="#94a3b8" stroke-width="4" stroke-dasharray="16 12"/>
+  <text x="960" y="500" text-anchor="middle" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="56" font-weight="600">Hero placeholder</text>
+  <text x="960" y="580" text-anchor="middle" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="40">1920 × 1080</text>
+</svg>

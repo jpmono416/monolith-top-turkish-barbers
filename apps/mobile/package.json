@@ -5,6 +5,8 @@
   "license": "UNLICENSED",
   "main": "expo-router/entry",
   "scripts": {
+    "prebuild": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build",
+    "predev": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build",
     "dev": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",

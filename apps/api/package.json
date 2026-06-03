@@ -4,6 +4,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "prebuild": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build",
     "build": "nest build",
     "predev": "pnpm --filter @monolith/types build && pnpm --filter @monolith/config build",
     "dev": "nest start --watch",
