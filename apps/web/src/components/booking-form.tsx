@@ -3,6 +3,7 @@
 import { Button } from '@monolith/ui';
 import { useMemo, useState } from 'react';
 import { submitBookingRequest } from '@/lib/api';
+import { BUSINESS } from '@/lib/business-content';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -180,9 +181,21 @@ export function BookingForm() {
         )}
 
         {formState === 'error' && (
-          <p className="text-destructive text-sm" role="alert">
-            {errorMessage}
-          </p>
+          <div className="space-y-2" role="alert">
+            <p className="text-destructive text-sm">{errorMessage}</p>
+            <p className="text-muted-foreground text-sm">
+              Or{' '}
+              <a
+                href={BUSINESS.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-medium hover:underline"
+              >
+                message us on WhatsApp
+              </a>{' '}
+              to book directly.
+            </p>
+          </div>
         )}
 
         <Button

@@ -6,17 +6,17 @@
 
 ## Checklist (definition of done)
 
-- Product + technical specs approved
-- Lightweight booking request endpoint implemented
-- Resend integration functional
-- WhatsApp Cloud API sandbox functional
-- Premium responsive landing page complete
-- Booking interaction polished
-- Environment variables configured
-- `pnpm lint`, `typecheck`, `test`, `build` pass
-- Critical booking journey manually validated
-- Production deployment working
-- Spec status updated
+- [x] Product + technical specs approved
+- [x] Lightweight booking request endpoint implemented
+- [x] Resend integration functional
+- [x] WhatsApp Cloud API sandbox functional
+- [x] Premium responsive landing page complete
+- [x] Booking interaction polished
+- [x] Environment variables configured
+- [x] `pnpm lint`, `typecheck`, `test`, `build` pass
+- [ ] Critical booking journey manually validated (production)
+- [ ] Production deployment working
+- [x] Spec status updated
 
 ## Implementation order
 

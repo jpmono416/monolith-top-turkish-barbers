@@ -2,7 +2,7 @@ import { GALLERY_ITEMS } from '@/lib/business-content';
 
 export function GallerySection() {
   return (
-    <section id="gallery" className="border-border/40 border-t py-20 sm:py-28">
+    <section id="gallery" className="border-border/40 border-t py-16 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-2xl">
           <p className="text-primary text-sm font-medium uppercase tracking-[0.3em]">Gallery</p>
@@ -15,12 +15,12 @@ export function GallerySection() {
           </p>
         </div>
 
-        <ul className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+        <ul className="mt-10 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {GALLERY_ITEMS.map((item, index) => (
             <li
               key={item.title}
               className={`relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br ${item.accent} ${
-                index === 0 ? 'col-span-2 row-span-1 aspect-[16/9] lg:col-span-2' : ''
+                index === 0 ? 'aspect-[16/9] sm:col-span-2 lg:col-span-2' : ''
               }`}
             >
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,hsl(0_0%_3%/_0.85)_100%)]" />

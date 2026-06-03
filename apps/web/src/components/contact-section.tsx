@@ -2,7 +2,7 @@ import { BUSINESS } from '@/lib/business-content';
 
 export function ContactSection() {
   return (
-    <section id="contact" className="border-border/40 border-t py-20 sm:py-28">
+    <section id="contact" className="border-border/40 border-t py-16 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>

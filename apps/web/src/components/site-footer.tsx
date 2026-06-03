@@ -5,8 +5,8 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-border/40 border-t py-12">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+    <footer className="border-border/40 border-t py-12 sm:py-14">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 sm:gap-8 md:flex-row md:items-end md:justify-between sm:px-6">
         <div>
           <p className="font-display text-primary text-xl">{BUSINESS.name}</p>
           <p className="text-muted-foreground mt-2 text-sm">

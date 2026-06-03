@@ -2,7 +2,7 @@ import { SERVICES } from '@/lib/business-content';
 
 export function ServicesSection() {
   return (
-    <section id="services" className="border-border/40 border-t py-20 sm:py-28">
+    <section id="services" className="border-border/40 border-t py-16 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-2xl">
           <p className="text-primary text-sm font-medium uppercase tracking-[0.3em]">Services</p>

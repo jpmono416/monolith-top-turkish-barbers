@@ -49,11 +49,18 @@
   --input: 0 0% 18%;
   --ring: 38 52% 52%;
   --radius: 0.625rem;
+  --header-height: 4.25rem;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
@@ -62,6 +69,15 @@
 
   .font-display {
     font-family: var(--font-display);
+  }
+
+  main section[id] {
+    scroll-margin-top: var(--header-height);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
   }
 }
 
@@ -103,10 +119,14 @@
   animation: booking-fade-in 0.5s ease-out forwards;
 }
 
-.fade-in {
-  opacity: 0;
-}
+@media (prefers-reduced-motion: reduce) {
+  .barber-pole-accent {
+    animation: none;
+  }
 
-.zoom-in-95 {
-  transform: scale(0.98) translateY(8px);
+  .animate-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

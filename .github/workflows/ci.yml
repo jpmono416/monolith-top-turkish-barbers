@@ -111,5 +111,5 @@ jobs:
         run: pnpm --filter @monolith/web test:e2e
         env:
           CI: true
-          NEXT_PUBLIC_APP_URL: http://localhost:3000
+          PLAYWRIGHT_PORT: '3010'
           NEXT_PUBLIC_API_URL: http://localhost:3001
