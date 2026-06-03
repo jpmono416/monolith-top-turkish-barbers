@@ -29,6 +29,30 @@ class EnvironmentVariables {
   @IsOptional()
   @IsString()
   BULLMQ_PREFIX?: string;
+
+  @IsOptional()
+  @IsString()
+  RESEND_API_KEY?: string;
+
+  @IsOptional()
+  @IsString()
+  BOOKING_NOTIFICATION_EMAIL?: string;
+
+  @IsOptional()
+  @IsString()
+  BOOKING_FROM_EMAIL?: string;
+
+  @IsOptional()
+  @IsString()
+  WHATSAPP_ACCESS_TOKEN?: string;
+
+  @IsOptional()
+  @IsString()
+  WHATSAPP_PHONE_NUMBER_ID?: string;
+
+  @IsOptional()
+  @IsString()
+  WHATSAPP_VERIFY_TOKEN?: string;
 }
 
 export function validate(config: Record<string, unknown>) {

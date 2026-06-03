@@ -19,3 +19,15 @@ export type ApiErrorResponse = {
   message: string;
   error?: string;
 };
+
+export type BookingRequestPayload = {
+  preferredDate: string;
+  customerName: string;
+  customerPhone?: string;
+  customerEmail?: string;
+};
+
+export type BookingRequestResponse = {
+  success: boolean;
+  message: string;
+};
