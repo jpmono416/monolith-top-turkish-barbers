@@ -23,29 +23,41 @@ export const BUSINESS = {
 } as const;
 
 export const SERVICES = [
-  { name: 'Hair cut', price: '£14' },
-  { name: 'Hot towel shave', price: '£18' },
-  { name: 'Hot steam', price: '£10' },
-  { name: 'Beard trim', price: '£10' },
-  { name: 'Skin fades', price: '£16' },
-  { name: 'Face mask', price: '£12' },
-  { name: 'Hot wax', price: '£8' },
+  { name: 'Hair cut', price: '£14', icon: '/images/services/hair-cut.png' },
+  { name: 'Hot towel shave', price: '£18', icon: '/images/services/hot-towel-shave.png' },
+  { name: 'Hot steam', price: '£10', icon: '/images/services/hot-steam.png' },
+  { name: 'Beard trim', price: '£10', icon: '/images/services/beard-trim.png' },
+  { name: 'Skin fades', price: '£16', icon: '/images/services/skin-fades.png' },
+  { name: 'Face mask', price: '£12', icon: '/images/services/face-mask.png' },
+  { name: 'Hot wax', price: '£8', icon: '/images/services/hot-wax.png' },
 ] as const;
 
-/** Layout placeholders — replace with on-site photography. */
+/** Temporary imagery — replace with on-site photography. */
 export const PLACEHOLDER_IMAGES = {
   hero: '/placeholders/hero.svg',
   galleryWide: '/placeholders/gallery-wide.svg',
-  galleryPortrait: '/placeholders/gallery-portrait.svg',
+  galleryPortraitOne: '/placeholders/gallery-portrait-1.png',
+  galleryPortraitTwo: '/placeholders/gallery-portrait-2.png',
+  galleryPortraitThree: '/placeholders/gallery-portrait-3.png',
 } as const;
 
-export const GALLERY_ITEMS = [
-  { title: 'Precision fade', image: PLACEHOLDER_IMAGES.galleryWide, featured: true },
-  { title: 'Hot towel ritual', image: PLACEHOLDER_IMAGES.galleryPortrait },
-  { title: 'Beard sculpting', image: PLACEHOLDER_IMAGES.galleryPortrait },
-  { title: 'Classic cut', image: PLACEHOLDER_IMAGES.galleryPortrait },
-  { title: 'Shop interior', image: PLACEHOLDER_IMAGES.galleryPortrait },
-  { title: 'Finishing detail', image: PLACEHOLDER_IMAGES.galleryPortrait },
+/** One row × three columns; portrait images only, three per carousel. */
+export const GALLERY_COLUMNS = [
+  [
+    PLACEHOLDER_IMAGES.galleryPortraitOne,
+    PLACEHOLDER_IMAGES.galleryPortraitTwo,
+    PLACEHOLDER_IMAGES.galleryPortraitThree,
+  ],
+  [
+    PLACEHOLDER_IMAGES.galleryPortraitTwo,
+    PLACEHOLDER_IMAGES.galleryPortraitThree,
+    PLACEHOLDER_IMAGES.galleryPortraitOne,
+  ],
+  [
+    PLACEHOLDER_IMAGES.galleryPortraitThree,
+    PLACEHOLDER_IMAGES.galleryPortraitOne,
+    PLACEHOLDER_IMAGES.galleryPortraitTwo,
+  ],
 ] as const;
 
 export const NAV_LINKS = [

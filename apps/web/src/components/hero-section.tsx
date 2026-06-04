@@ -4,7 +4,7 @@ import { BUSINESS, PLACEHOLDER_IMAGES } from '@/lib/business-content';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[80svh] overflow-hidden sm:min-h-[88svh] lg:min-h-[90svh]">
+    <section className="relative min-h-[76svh] overflow-hidden sm:min-h-[82svh] lg:min-h-[86svh]">
       <Image
         src={PLACEHOLDER_IMAGES.hero}
         alt=""
@@ -30,7 +30,7 @@ export function HeroSection() {
         aria-hidden
       />
 
-      <div className="relative mx-auto flex max-w-6xl min-h-[80svh] flex-col justify-end px-4 pb-14 pt-20 sm:min-h-[88svh] sm:px-6 sm:pb-20 sm:pt-24 lg:min-h-[90svh] lg:pt-28">
+      <div className="relative mx-auto flex max-w-6xl min-h-[76svh] flex-col justify-center px-4 py-20 sm:min-h-[82svh] sm:px-6 sm:py-24 lg:min-h-[86svh] lg:py-28">
         <p className="text-primary mb-2 text-xs font-medium uppercase tracking-[0.28em] sm:mb-3 sm:text-sm sm:tracking-[0.35em]">
           Shrewsbury · Turkish barbering
         </p>
@@ -44,13 +44,13 @@ export function HeroSection() {
         <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4">
           <Link
             href="#booking"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold tracking-wide transition-colors sm:min-h-0"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex min-h-12 items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold tracking-wide transition-colors duration-300 sm:min-h-0"
           >
             Request appointment
           </Link>
           <Link
             href="#services"
-            className="border-border text-foreground hover:border-primary/60 inline-flex min-h-12 items-center justify-center rounded-full border px-8 py-3.5 text-sm font-medium tracking-wide transition-colors sm:min-h-0"
+            className="border-border text-foreground hover:border-primary/60 inline-flex min-h-12 items-center justify-center rounded-full border px-8 py-3.5 text-sm font-medium tracking-wide transition-colors duration-300 sm:min-h-0"
           >
             View services
           </Link>

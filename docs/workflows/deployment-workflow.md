@@ -2,11 +2,13 @@
 
 ## Environments
 
-| Environment | Web | API | DB | Redis |
-|-------------|-----|-----|-----|-------|
-| Local | localhost:3000 | localhost:3001 | Docker Postgres | Docker Redis |
-| CI | build only | build only | service container | service container |
-| Production | Vercel | Railway | Supabase | Upstash |
+
+| Environment | Web            | API            | DB                | Redis             |
+| ----------- | -------------- | -------------- | ----------------- | ----------------- |
+| Local       | localhost:3000 | localhost:3001 | Docker Postgres   | Docker Redis      |
+| CI          | build only     | build only     | service container | service container |
+| Production  | Vercel         | Railway        | Supabase          | Upstash           |
+
 
 Staging should mirror production with **isolated** Supabase and Upstash instances.
 
@@ -55,21 +57,24 @@ Coordinate backward-compatible API deploys if schema and code must align.
 
 ## Rollback
 
-| Layer | Action |
-|-------|--------|
-| Web | Vercel instant rollback to previous deployment |
-| API | Railway redeploy previous image |
-| DB | Forward-only migrations preferred; have manual rollback SQL reviewed in advance |
+
+| Layer | Action                                                                          |
+| ----- | ------------------------------------------------------------------------------- |
+| Web   | Vercel instant rollback to previous deployment                                  |
+| API   | Railway redeploy previous image                                                 |
+| DB    | Forward-only migrations preferred; have manual rollback SQL reviewed in advance |
+
 
 ## Pre-release checklist
 
-- [ ] CI green on release commit
-- [ ] Spec / changelog updated
-- [ ] Migrations reviewed
-- [ ] Env vars set on Railway + Vercel
-- [ ] No dev URLs in production env
+- CI green on release commit
+- Spec / changelog updated
+- Migrations reviewed
+- Env vars set on Railway + Vercel
+- No dev URLs in production env
 
 ## Related
 
 - `docs/architecture/infrastructure-standards.md`
 - `.ai/workflows/release-lifecycle.md`
+

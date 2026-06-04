@@ -100,7 +100,7 @@ export function BookingForm() {
   }
 
   return (
-    <div className="border-border/60 bg-card/30 mx-auto mt-12 max-w-lg rounded-2xl border p-6 sm:p-8">
+    <div className="border-border/60 bg-card/30 mx-auto mt-8 max-w-lg rounded-2xl border p-6 transition-colors duration-300 hover:border-primary/20 sm:mt-10 sm:p-8">
       <form className="space-y-5" aria-label="Appointment request" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="preferredDate" className="text-foreground mb-2 block text-sm font-medium">
@@ -114,7 +114,7 @@ export function BookingForm() {
             min={minDate}
             value={preferredDate}
             onChange={(event) => setPreferredDate(event.target.value)}
-            className="border-input bg-background text-foreground focus:ring-primary w-full rounded-lg border px-4 py-3 text-sm outline-none focus:ring-2"
+            className="border-input bg-background text-foreground focus:ring-primary w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2"
           />
         </div>
 
@@ -132,7 +132,7 @@ export function BookingForm() {
                 placeholder="Full name"
                 value={customerName}
                 onChange={(event) => setCustomerName(event.target.value)}
-                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
+                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -151,7 +151,7 @@ export function BookingForm() {
                 placeholder="+44 ..."
                 value={customerPhone}
                 onChange={(event) => setCustomerPhone(event.target.value)}
-                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
+                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -170,7 +170,7 @@ export function BookingForm() {
                 placeholder="you@example.com"
                 value={customerEmail}
                 onChange={(event) => setCustomerEmail(event.target.value)}
-                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary"
+                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2 focus:ring-primary"
               />
             </div>
 

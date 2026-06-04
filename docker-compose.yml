@@ -31,6 +31,16 @@ services:
       timeout: 5s
       retries: 10
 
+  deps:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/web.Dockerfile
+      target: development
+    volumes:
+      - .:/app
+      - monolith_node_modules:/app/node_modules
+    command: pnpm install
+
   api:
     build:
       context: .
@@ -53,11 +63,13 @@ services:
       - .:/app
       - monolith_node_modules:/app/node_modules
     depends_on:
+      deps:
+        condition: service_completed_successfully
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: sh -c "pnpm install && pnpm db:generate && pnpm --filter @monolith/types build && pnpm --filter @monolith/config build && pnpm --filter @monolith/api dev"
+    command: sh -c "pnpm db:generate && pnpm --filter @monolith/types build && pnpm --filter @monolith/config build && pnpm --filter @monolith/api dev"
 
   web:
     build:
@@ -79,8 +91,11 @@ services:
       - monolith_node_modules:/app/node_modules
       - web_next_cache:/app/apps/web/.next
     depends_on:
-      - api
-    command: sh -c "pnpm install && pnpm --filter @monolith/web dev"
+      deps:
+        condition: service_completed_successfully
+      api:
+        condition: service_started
+    command: pnpm --filter @monolith/web dev
 
 volumes:
   postgres_data:

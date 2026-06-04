@@ -2,11 +2,13 @@
 
 ## Tooling
 
-| Tool | Role |
-|------|------|
-| pnpm workspaces | Dependency graph, `workspace:*` protocol |
-| Turborepo | Task orchestration, caching (`turbo.json`) |
-| Node ≥22, pnpm 9.15.9 | Pin in `package.json` `engines` |
+
+| Tool                  | Role                                       |
+| --------------------- | ------------------------------------------ |
+| pnpm workspaces       | Dependency graph, `workspace:*` protocol   |
+| Turborepo             | Task orchestration, caching (`turbo.json`) |
+| Node ≥22, pnpm 9.15.9 | Pin in `package.json` `engines`            |
+
 
 ## Layout
 
@@ -21,28 +23,32 @@ docs/           # Human + AI operational docs
 
 ## Package naming
 
-| Package | Name |
-|---------|------|
-| API | `@monolith/api` |
-| Web | `@monolith/web` |
-| Mobile | `@monolith/mobile` |
-| Types | `@monolith/types` |
-| UI | `@monolith/ui` |
-| Config | `@monolith/config` |
+
+| Package | Name               |
+| ------- | ------------------ |
+| API     | `@monolith/api`    |
+| Web     | `@monolith/web`    |
+| Mobile  | `@monolith/mobile` |
+| Types   | `@monolith/types`  |
+| UI      | `@monolith/ui`     |
+| Config  | `@monolith/config` |
+
 
 New shared packages: `@monolith/<kebab-name>` under `packages/`.
 
 ## Commands (root)
 
-| Command | Use |
-|---------|-----|
-| `pnpm install` | Install + postinstall (`db:generate`) |
-| `pnpm dev` | Turbo dev all apps |
-| `pnpm --filter @monolith/api dev` | Single app |
-| `pnpm build` | Production build all |
-| `pnpm lint` / `typecheck` / `test` | PR gate |
-| `pnpm db:migrate` | Prisma migrate dev |
-| `pnpm docker:up` | Full local stack |
+
+| Command                            | Use                                   |
+| ---------------------------------- | ------------------------------------- |
+| `pnpm install`                     | Install + postinstall (`db:generate`) |
+| `pnpm dev`                         | Turbo dev all apps                    |
+| `pnpm --filter @monolith/api dev`  | Single app                            |
+| `pnpm build`                       | Production build all                  |
+| `pnpm lint` / `typecheck` / `test` | PR gate                               |
+| `pnpm db:migrate`                  | Prisma migrate dev                    |
+| `pnpm docker:up`                   | Full local stack                      |
+
 
 ## Adding a workspace package
 

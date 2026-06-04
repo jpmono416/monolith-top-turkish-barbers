@@ -228,4 +228,3 @@ When approved, create:
 
 1. `2026-06-03-top-turkish-barbers-ui-refinement-technical.md`
 2. `2026-06-03-top-turkish-barbers-ui-refinement-plan.md`
-
