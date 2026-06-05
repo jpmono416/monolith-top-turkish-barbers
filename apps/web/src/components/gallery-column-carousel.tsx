@@ -37,7 +37,7 @@ export function GalleryColumnCarousel({ images, columnIndex }: GalleryColumnCaro
   }, [columnIndex, images.length]);
 
   return (
-    <div className="flex w-full flex-col items-center gap-2.5">
+    <div className="flex w-full flex-col items-center gap-4">
       <div className="gallery-frame w-full">
         <span className="gallery-frame-corner gallery-frame-corner-tl" aria-hidden="true" />
         <span className="gallery-frame-corner gallery-frame-corner-tr" aria-hidden="true" />
@@ -62,7 +62,7 @@ export function GalleryColumnCarousel({ images, columnIndex }: GalleryColumnCaro
       </div>
 
       <div
-        className="flex items-center justify-center gap-1.5"
+        className="gallery-carousel-dots"
         role="tablist"
         aria-label={`Gallery column ${columnIndex + 1} slides`}
       >
@@ -76,9 +76,7 @@ export function GalleryColumnCarousel({ images, columnIndex }: GalleryColumnCaro
               aria-selected={isActive}
               aria-label={`Show image ${index + 1} of ${images.length}`}
               onClick={() => setActiveIndex(index)}
-              className={`h-1 rounded-full transition-all duration-300 ${
-                isActive ? 'w-5 bg-primary' : 'w-2 bg-muted-foreground/35 hover:bg-primary/60'
-              }`}
+              className={`gallery-carousel-dot ${isActive ? 'gallery-carousel-dot--active' : ''}`}
             />
           );
         })}
