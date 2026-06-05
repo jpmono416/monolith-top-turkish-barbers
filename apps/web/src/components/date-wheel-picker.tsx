@@ -86,7 +86,12 @@ function WheelPicker<T extends string | number>({
       wheelAccumulatorRef.current = 0;
       wheelLockRef.current = true;
 
-      const currentIndex = Math.round(viewport.scrollTop / ITEM_HEIGHT);
+      const wheelViewport = viewportRef.current;
+      if (!wheelViewport) {
+        return;
+      }
+
+      const currentIndex = Math.round(wheelViewport.scrollTop / ITEM_HEIGHT);
       snapToIndex(currentIndex + direction);
 
       window.setTimeout(() => {
