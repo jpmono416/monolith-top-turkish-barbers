@@ -2,18 +2,39 @@
 
 import { Button } from '@monolith/ui';
 import { useMemo, useState } from 'react';
+import { DateWheelPicker } from '@/components/date-wheel-picker';
 import { submitBookingRequest } from '@/lib/api';
+import {
+  formatPreferredDate,
+  getCurrentYear,
+  getDaysInMonth,
+  getMonthOptions,
+  isValidBookingDate,
+} from '@/lib/booking-date';
 import { BUSINESS } from '@/lib/business-content';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
-function getMinDate(): string {
-  return new Date().toISOString().slice(0, 10);
+function getInitialDayAndMonth(): { day: number; monthIndex: number } {
+  const today = new Date();
+  return { day: today.getDate(), monthIndex: today.getMonth() };
+}
+
+function getDayOptions(monthIndex: number): number[] {
+  const today = new Date();
+  const maxDay = getDaysInMonth(monthIndex);
+  const isCurrentMonth =
+    monthIndex === today.getMonth() && getCurrentYear() === today.getFullYear();
+  const minDay = isCurrentMonth ? today.getDate() : 1;
+
+  return Array.from({ length: maxDay - minDay + 1 }, (_, index) => minDay + index);
 }
 
 export function BookingForm() {
-  const minDate = useMemo(() => getMinDate(), []);
-  const [preferredDate, setPreferredDate] = useState('');
+  const initialDate = useMemo(() => getInitialDayAndMonth(), []);
+  const [day, setDay] = useState(initialDate.day);
+  const [monthIndex, setMonthIndex] = useState(initialDate.monthIndex);
+  const [hasSelectedDate, setHasSelectedDate] = useState(false);
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -21,11 +42,47 @@ export function BookingForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  const dayOptions = useMemo(() => getDayOptions(monthIndex), [monthIndex]);
+  const monthOptions = useMemo(() => getMonthOptions(), []);
+  const preferredDate =
+    hasSelectedDate && isValidBookingDate(day, monthIndex)
+      ? formatPreferredDate(day, monthIndex)
+      : '';
+
   const showContactFields = preferredDate.length > 0;
   const canSubmit =
     showContactFields &&
     customerName.trim().length > 0 &&
     (customerPhone.trim().length > 0 || customerEmail.trim().length > 0);
+
+  function handleDayChange(nextDay: number) {
+    setDay(nextDay);
+  }
+
+  function handleMonthChange(nextMonthIndex: number) {
+    setMonthIndex(nextMonthIndex);
+    const options = getDayOptions(nextMonthIndex);
+    const lastDay = options[options.length - 1];
+    if (!options.includes(day) && lastDay !== undefined) {
+      setDay(lastDay);
+    }
+  }
+
+  function handleDateInteract() {
+    setHasSelectedDate(true);
+  }
+
+  function resetForm() {
+    const nextInitial = getInitialDayAndMonth();
+    setDay(nextInitial.day);
+    setMonthIndex(nextInitial.monthIndex);
+    setHasSelectedDate(false);
+    setCustomerName('');
+    setCustomerPhone('');
+    setCustomerEmail('');
+    setSuccessMessage('');
+    setFormState('idle');
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -58,12 +115,8 @@ export function BookingForm() {
 
   if (formState === 'success') {
     return (
-      <div
-        className="animate-in mx-auto max-w-lg"
-        role="status"
-        aria-live="polite"
-      >
-        <div className="border-primary/30 bg-card/50 rounded-2xl border p-8 text-center sm:p-10">
+      <div className="booking-form animate-in" role="status" aria-live="polite">
+        <div className="booking-form__success border-primary/30 bg-card/50 rounded-2xl border p-8 text-center sm:p-10">
           <div className="bg-primary/15 text-primary mx-auto flex size-14 items-center justify-center rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -83,14 +136,7 @@ export function BookingForm() {
             type="button"
             variant="outline"
             className="mt-8 rounded-full"
-            onClick={() => {
-              setPreferredDate('');
-              setCustomerName('');
-              setCustomerPhone('');
-              setCustomerEmail('');
-              setSuccessMessage('');
-              setFormState('idle');
-            }}
+            onClick={resetForm}
           >
             Book another visit
           </Button>
@@ -100,88 +146,65 @@ export function BookingForm() {
   }
 
   return (
-    <div className="border-border/60 bg-card/30 mx-auto mt-8 max-w-lg rounded-2xl border p-6 transition-colors duration-300 hover:border-primary/20 sm:mt-10 sm:p-8">
-      <form className="space-y-5" aria-label="Appointment request" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="preferredDate" className="text-foreground mb-2 block text-sm font-medium">
-            Preferred date
-          </label>
-          <input
-            id="preferredDate"
-            name="preferredDate"
-            type="date"
-            required
-            min={minDate}
-            value={preferredDate}
-            onChange={(event) => setPreferredDate(event.target.value)}
-            className="border-input bg-background text-foreground focus:ring-primary w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2"
-          />
-        </div>
+    <div className="booking-form">
+      <form className="booking-form__inner" aria-label="Appointment request" onSubmit={handleSubmit}>
+        <DateWheelPicker
+          day={day}
+          monthIndex={monthIndex}
+          dayOptions={dayOptions}
+          monthOptions={monthOptions}
+          onDayChange={handleDayChange}
+          onMonthChange={handleMonthChange}
+          onInteract={handleDateInteract}
+        />
 
         {showContactFields && (
-          <div className="animate-in space-y-5">
-            <div>
-              <label htmlFor="customerName" className="text-foreground mb-2 block text-sm font-medium">
-                Your name
-              </label>
-              <input
-                id="customerName"
-                name="customerName"
-                type="text"
-                autoComplete="name"
-                placeholder="Full name"
-                value={customerName}
-                onChange={(event) => setCustomerName(event.target.value)}
-                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2 focus:ring-primary"
-              />
-            </div>
+          <div className="booking-form__fields animate-in">
+            <input
+              id="customerName"
+              name="customerName"
+              type="text"
+              autoComplete="name"
+              aria-label="Your name"
+              placeholder="Full name"
+              value={customerName}
+              onChange={(event) => setCustomerName(event.target.value)}
+              className="booking-field"
+            />
 
-            <div className="animate-in" style={{ animationDelay: '75ms' }}>
-              <label
-                htmlFor="customerPhone"
-                className="text-foreground mb-2 block text-sm font-medium"
-              >
-                Phone <span className="text-muted-foreground font-normal">(optional)</span>
-              </label>
+            <div className="booking-form__contact-row">
               <input
                 id="customerPhone"
                 name="customerPhone"
                 type="tel"
                 autoComplete="tel"
-                placeholder="+44 ..."
+                aria-label="Phone"
+                placeholder="Phone"
                 value={customerPhone}
                 onChange={(event) => setCustomerPhone(event.target.value)}
-                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2 focus:ring-primary"
+                className="booking-field"
               />
-            </div>
-
-            <div className="animate-in" style={{ animationDelay: '150ms' }}>
-              <label
-                htmlFor="customerEmail"
-                className="text-foreground mb-2 block text-sm font-medium"
-              >
-                Email <span className="text-muted-foreground font-normal">(optional)</span>
-              </label>
               <input
                 id="customerEmail"
                 name="customerEmail"
                 type="email"
                 autoComplete="email"
-                placeholder="you@example.com"
+                aria-label="Email"
+                placeholder="Email"
                 value={customerEmail}
                 onChange={(event) => setCustomerEmail(event.target.value)}
-                className="border-input bg-background text-foreground placeholder:text-muted-foreground w-full rounded-lg border px-4 py-3 text-sm outline-none transition-colors duration-300 focus:ring-2 focus:ring-primary"
+                className="booking-field"
               />
             </div>
 
-            <p className="text-muted-foreground text-xs leading-relaxed">
+            <p className="booking-form__hint">
               Provide at least one contact method — phone or email.
             </p>
           </div>
         )}
 
         {formState === 'error' && (
-          <div className="space-y-2" role="alert">
+          <div className="booking-form__error" role="alert">
             <p className="text-destructive text-sm">{errorMessage}</p>
             <p className="text-muted-foreground text-sm">
               Or{' '}
@@ -198,13 +221,15 @@ export function BookingForm() {
           </div>
         )}
 
-        <Button
-          type="submit"
-          disabled={!canSubmit || formState === 'submitting'}
-          className="w-full rounded-full py-6 text-sm font-semibold tracking-wide"
-        >
-          {formState === 'submitting' ? 'Sending request…' : 'Submit request'}
-        </Button>
+        <div className="booking-form__submit">
+          <button
+            type="submit"
+            disabled={!canSubmit || formState === 'submitting'}
+            className="book-appointment-btn"
+          >
+            {formState === 'submitting' ? 'Sending request…' : 'Submit request'}
+          </button>
+        </div>
       </form>
     </div>
   );

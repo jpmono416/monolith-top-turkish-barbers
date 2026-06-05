@@ -27,8 +27,29 @@ test('mobile navigation and booking layout', async ({ page }) => {
 
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 14);
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ] as const;
 
-  await page.getByLabel('Preferred date').fill(futureDate.toISOString().slice(0, 10));
+  await page
+    .locator('#booking-day')
+    .getByRole('option', { name: String(futureDate.getDate()), exact: true })
+    .click();
+  await page
+    .locator('#booking-month')
+    .getByRole('option', { name: monthNames[futureDate.getMonth()], exact: true })
+    .click();
   await page.getByLabel('Your name').fill('Mobile Guest');
   await page.getByLabel(/Phone/).fill('+447700900001');
   await page.getByRole('button', { name: 'Submit request' }).click();

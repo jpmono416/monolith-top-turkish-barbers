@@ -1,4 +1,24 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
+
+const MONTH_NAMES = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+] as const;
+
+async function selectBookingDate(page: Page, day: number, monthName: string) {
+  await page.locator('#booking-day').getByRole('option', { name: String(day), exact: true }).click();
+  await page.locator('#booking-month').getByRole('option', { name: monthName, exact: true }).click();
+}
 
 test('booking request flow reveals fields and completes successfully', async ({ page }) => {
   await page.route('**/api/booking-request', async (route) => {
@@ -19,9 +39,9 @@ test('booking request flow reveals fields and completes successfully', async ({ 
 
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 7);
-  const dateValue = futureDate.toISOString().slice(0, 10);
+  const monthName = MONTH_NAMES[futureDate.getMonth()] as (typeof MONTH_NAMES)[number];
 
-  await page.getByLabel('Preferred date').fill(dateValue);
+  await selectBookingDate(page, futureDate.getDate(), monthName);
   await expect(page.getByLabel('Your name')).toBeVisible();
 
   await page.getByLabel('Your name').fill('Demo Customer');
