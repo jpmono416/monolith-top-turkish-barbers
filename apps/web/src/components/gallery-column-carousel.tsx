@@ -62,7 +62,7 @@ export function GalleryColumnCarousel({ images, columnIndex }: GalleryColumnCaro
       </div>
 
       <div
-        className="flex items-center justify-center gap-2"
+        className="flex items-center justify-center gap-1.5"
         role="tablist"
         aria-label={`Gallery column ${columnIndex + 1} slides`}
       >
@@ -76,10 +76,8 @@ export function GalleryColumnCarousel({ images, columnIndex }: GalleryColumnCaro
               aria-selected={isActive}
               aria-label={`Show image ${index + 1} of ${images.length}`}
               onClick={() => setActiveIndex(index)}
-              className={`size-1.5 rounded-full transition-all duration-300 ${
-                isActive
-                  ? 'scale-125 bg-primary'
-                  : 'bg-muted-foreground/35 hover:bg-primary/60'
+              className={`h-1 rounded-full transition-all duration-300 ${
+                isActive ? 'w-5 bg-primary' : 'w-2 bg-muted-foreground/35 hover:bg-primary/60'
               }`}
             />
           );

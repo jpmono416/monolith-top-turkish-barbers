@@ -36,28 +36,27 @@ export const SERVICES = [
 /** Temporary imagery — replace with on-site photography. */
 export const PLACEHOLDER_IMAGES = {
   hero: '/images/hero-interior.png',
-  galleryWide: '/placeholders/gallery-wide.svg',
-  galleryPortraitOne: '/placeholders/gallery-portrait-1.png',
-  galleryPortraitTwo: '/placeholders/gallery-portrait-2.png',
-  galleryPortraitThree: '/placeholders/gallery-portrait-3.png',
 } as const;
+
+const galleryImage = (filename: string) =>
+  `/images/gallery/${encodeURIComponent(filename)}`;
 
 /** One row × three columns; portrait images only, three per carousel. */
 export const GALLERY_COLUMNS = [
   [
-    PLACEHOLDER_IMAGES.galleryPortraitOne,
-    PLACEHOLDER_IMAGES.galleryPortraitTwo,
-    PLACEHOLDER_IMAGES.galleryPortraitThree,
+    galleryImage('Screenshot 2026-06-05 180033.png'),
+    galleryImage('Screenshot 2026-06-05 180106.png'),
+    galleryImage('Screenshot 2026-06-05 180116.png'),
   ],
   [
-    PLACEHOLDER_IMAGES.galleryPortraitTwo,
-    PLACEHOLDER_IMAGES.galleryPortraitThree,
-    PLACEHOLDER_IMAGES.galleryPortraitOne,
+    galleryImage('Screenshot 2026-06-05 180134.png'),
+    galleryImage('Screenshot 2026-06-05 180152.png'),
+    galleryImage('Screenshot 2026-06-05 180204.png'),
   ],
   [
-    PLACEHOLDER_IMAGES.galleryPortraitThree,
-    PLACEHOLDER_IMAGES.galleryPortraitOne,
-    PLACEHOLDER_IMAGES.galleryPortraitTwo,
+    galleryImage('Screenshot 2026-06-05 180312.png'),
+    galleryImage('Screenshot 2026-06-05 180324.png'),
+    galleryImage('Screenshot 2026-06-05 180337.png'),
   ],
 ] as const;
 
