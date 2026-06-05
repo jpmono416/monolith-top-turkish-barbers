@@ -49,7 +49,7 @@
   --input: 0 0% 18%;
   --ring: 38 52% 52%;
   --radius: 0.625rem;
-  --header-height: 4.25rem;
+  --header-height: 5.5rem;
 }
 
 @layer base {
@@ -77,18 +77,18 @@
 
   .section-shell {
     border-top: 1px solid hsl(var(--border) / 0.4);
-    padding-block: 2.5rem;
+    padding-block: 2.25rem;
   }
 
   @media (width >= 40rem) {
     .section-shell {
-      padding-block: 3.25rem;
+      padding-block: 2.875rem;
     }
   }
 
   @media (width >= 64rem) {
     .section-shell {
-      padding-block: 4rem;
+      padding-block: 3.5rem;
     }
   }
 
@@ -110,6 +110,34 @@
   );
   background-size: 24px 48px;
   animation: barber-pole-scroll 6s linear infinite;
+}
+
+.site-header-inner {
+  min-height: var(--header-height);
+}
+
+.site-desktop-nav {
+  display: none;
+}
+
+.site-desktop-nav > a {
+  white-space: nowrap;
+}
+
+.site-mobile-menu {
+  display: block;
+}
+
+@media (width >= 48rem) {
+  .site-desktop-nav {
+    display: flex;
+    align-items: center;
+    column-gap: 2rem;
+  }
+
+  .site-mobile-menu {
+    display: none;
+  }
 }
 
 @keyframes barber-pole-scroll {
@@ -340,10 +368,19 @@
     radial-gradient(circle at 50% 105%, hsl(0 0% 0% / 0.26), transparent 55%);
 }
 
+.location-card,
 .contact-panel {
   border-radius: 0.75rem;
-  border: 1px solid hsl(var(--border) / 0.55);
-  background: hsl(var(--card) / 0.35);
+  border: 1px solid hsl(var(--primary) / 0.2);
+  background:
+    radial-gradient(circle at 50% 0%, hsl(var(--primary) / 0.1), transparent 42%),
+    linear-gradient(180deg, hsl(var(--card) / 0.62), hsl(var(--background) / 0.72));
+  box-shadow:
+    inset 0 1px 0 hsl(var(--primary) / 0.12),
+    0 1rem 2rem hsl(0 0% 0% / 0.16);
+}
+
+.contact-panel {
   padding: 1.25rem;
 }
 

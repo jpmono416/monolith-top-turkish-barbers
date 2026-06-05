@@ -9,6 +9,7 @@ export const BUSINESS = {
     postcode: 'SY1 2BQ',
     country: 'United Kingdom',
   },
+  locationDescription: 'Located in the heart of Shrewsbury',
   phone: '+441743369000',
   phoneDisplay: '01743 369 000',
   email: 'hello@topturkishbarbers.co.uk',
@@ -34,7 +35,7 @@ export const SERVICES = [
 
 /** Temporary imagery — replace with on-site photography. */
 export const PLACEHOLDER_IMAGES = {
-  hero: '/placeholders/hero.svg',
+  hero: '/images/hero-interior.svg',
   galleryWide: '/placeholders/gallery-wide.svg',
   galleryPortraitOne: '/placeholders/gallery-portrait-1.png',
   galleryPortraitTwo: '/placeholders/gallery-portrait-2.png',
@@ -61,8 +62,8 @@ export const GALLERY_COLUMNS = [
 ] as const;
 
 export const NAV_LINKS = [
+  { href: '#home', label: 'Home' },
   { href: '#services', label: 'Services' },
   { href: '#gallery', label: 'Gallery' },
-  { href: '#booking', label: 'Book' },
   { href: '#contact', label: 'Contact' },
 ] as const;
