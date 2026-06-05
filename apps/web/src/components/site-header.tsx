@@ -49,16 +49,15 @@ export function SiteHeader() {
           className="flex shrink-0 items-center gap-3 no-underline sm:gap-4"
           aria-label={BUSINESS.name}
         >
-          <span className="relative block size-14 shrink-0 overflow-hidden sm:size-16 lg:size-[4.75rem]">
-            <Image
-              src="/images/logo.png"
-              alt=""
-              fill
-              sizes="76px"
-              className="object-cover object-center"
-              priority
-            />
-          </span>
+          <Image
+            src="/images/logo.png"
+            alt=""
+            width={56}
+            height={56}
+            className="site-logo"
+            sizes="(min-width: 1024px) 76px, (min-width: 640px) 64px, 56px"
+            priority
+          />
           <span className="font-display text-primary text-xl leading-[1.02] tracking-wide sm:text-[1.65rem] lg:text-[1.9rem]">
             {BUSINESS.name.split(' ').map((word) => (
               <span key={word} className="block">
