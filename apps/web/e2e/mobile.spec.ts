@@ -20,10 +20,10 @@ test('mobile navigation and booking layout', async ({ page }) => {
 
   await expect(page.getByText('Menu', { exact: true })).toBeVisible();
   await page.getByText('Menu', { exact: true }).click();
-  await page.getByLabel('Mobile').getByRole('link', { name: 'Book now' }).click();
+  await page.getByLabel('Mobile').getByRole('link', { name: 'Book Appointment' }).click();
 
   await expect(page).toHaveURL(/#booking/);
-  await expect(page.getByRole('heading', { name: 'Request an appointment' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Booking' })).toBeVisible();
 
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 14);
