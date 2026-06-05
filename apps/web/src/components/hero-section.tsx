@@ -30,7 +30,7 @@ export function HeroSection() {
         <p className="text-primary/90 mb-4 text-sm font-semibold uppercase tracking-[0.34em] sm:mb-5 sm:text-base sm:tracking-[0.42em]">
           TRADITION • PRECISION • PERFECTION
         </p>
-        <h1 className="font-display text-foreground max-w-3xl text-[3rem] leading-[0.98] sm:text-[3.75rem] lg:text-[4.5rem]">
+        <h1 className="font-display text-foreground max-w-3xl text-[3rem] uppercase leading-[0.98] sm:text-[3.75rem] lg:text-[4.5rem]">
           Premium Grooming
           <span className="block">for the Modern Man</span>
         </h1>

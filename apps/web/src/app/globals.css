@@ -2,7 +2,7 @@
 @source "../../../packages/ui/src/**/*.{ts,tsx}";
 
 @theme inline {
-  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-display: var(--font-playfair), ui-serif, Georgia, serif;
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -55,6 +55,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -297,16 +298,17 @@
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: 0.01em;
+  text-transform: uppercase;
   color: hsl(var(--foreground));
 }
 
 .service-card p.service-card__price {
   margin: 0.125rem 0 0;
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
   color: hsl(var(--primary));
 }
@@ -385,7 +387,7 @@
   }
 }
 
-.gallery-section-divider {
+.section-title-divider {
   width: 3.5rem;
   height: 1px;
   margin: 0.875rem auto 0;
@@ -572,8 +574,9 @@
   background: hsl(var(--primary));
 }
 
-.location-card,
-.contact-panel {
+.visit-us-card {
+  margin-top: 1.75rem;
+  overflow: hidden;
   border-radius: 0.75rem;
   border: 1px solid hsl(var(--primary) / 0.2);
   background:
@@ -584,14 +587,142 @@
     0 1rem 2rem hsl(0 0% 0% / 0.16);
 }
 
-.contact-panel {
-  padding: 1.25rem;
+@media (width >= 40rem) {
+  .visit-us-card {
+    margin-top: 2rem;
+  }
+}
+
+.visit-us-card__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (width >= 64rem) {
+  .visit-us-card__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.visit-us-card__column {
+  min-width: 0;
+}
+
+.visit-us-card__column--location {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (width >= 64rem) {
+  .visit-us-card__column--location {
+    border-right: 1px solid hsl(var(--primary) / 0.2);
+  }
+}
+
+@media (width < 64rem) {
+  .visit-us-card__column--details {
+    border-top: 1px solid hsl(var(--primary) / 0.2);
+  }
+}
+
+.visit-us-card__rule {
+  border-top: 1px solid hsl(var(--primary) / 0.2);
+}
+
+.visit-us-map {
+  width: 100%;
+  height: 16rem;
+  z-index: 0;
 }
 
 @media (width >= 40rem) {
-  .contact-panel {
-    padding: 1.5rem;
+  .visit-us-map {
+    height: 18rem;
   }
+}
+
+@media (width >= 64rem) {
+  .visit-us-map {
+    height: 22rem;
+  }
+}
+
+.visit-us-map .leaflet-control-zoom a {
+  color: hsl(var(--foreground));
+  background: hsl(var(--card) / 0.92);
+  border-color: hsl(var(--primary) / 0.25);
+}
+
+.visit-us-map .leaflet-control-attribution {
+  font-size: 0.625rem;
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--background) / 0.72);
+}
+
+.visit-us-map-marker {
+  background: transparent;
+  border: 0;
+}
+
+.visit-us-map-marker__dot {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  border: 2px solid hsl(var(--primary-foreground));
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.28);
+}
+
+.visit-us-card__address,
+.visit-us-card__column--details {
+  padding: 1.25rem 1.375rem;
+}
+
+@media (width >= 40rem) {
+  .visit-us-card__address,
+  .visit-us-card__column--details {
+    padding: 1.5rem 1.75rem;
+  }
+}
+
+.visit-us-card__column--details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.visit-us-card__heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: hsl(var(--accent-foreground));
+}
+
+.visit-us-card__hours {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 0.875rem;
+}
+
+.visit-us-card__hours-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.visit-us-card__contacts {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.visit-us-card__contact-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -762,10 +893,13 @@
 
 .date-wheel__frame {
   position: relative;
-  border: 1px solid hsl(var(--border) / 0.7);
-  border-radius: 0.875rem;
-  background: hsl(var(--background) / 0.85);
   overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--primary) / 0.2);
+  background:
+    radial-gradient(circle at 50% 0%, hsl(var(--primary) / 0.1), transparent 42%),
+    linear-gradient(180deg, hsl(var(--card) / 0.62), hsl(var(--background) / 0.72));
+  box-shadow: inset 0 1px 0 hsl(var(--primary) / 0.12);
 }
 
 .date-wheel__viewport {

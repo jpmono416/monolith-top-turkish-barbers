@@ -130,7 +130,7 @@ export function BookingForm() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="font-display text-foreground mt-6 text-2xl">Request received</h3>
+          <h3 className="font-display text-foreground mt-6 text-2xl uppercase">Request received</h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{successMessage}</p>
           <Button
             type="button"

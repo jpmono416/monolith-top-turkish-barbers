@@ -2,52 +2,115 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BUSINESS, NAV_LINKS } from '@/lib/business-content';
 
 const SECTION_IDS = ['home', 'services', 'gallery', 'contact'] as const;
+type SectionId = (typeof SECTION_IDS)[number];
 
-export function SiteHeader() {
-  const [activeSection, setActiveSection] = useState<(typeof SECTION_IDS)[number]>('home');
+function isSectionId(value: string): value is SectionId {
+  return (SECTION_IDS as readonly string[]).includes(value);
+}
 
-  useEffect(() => {
-    const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
-      (section): section is HTMLElement => section !== null,
-    );
+function getHeaderOffset(): number {
+  return document.querySelector('header')?.offsetHeight ?? 88;
+}
 
-    if (sections.length === 0) {
-      return;
+function resolveActiveSection(): SectionId {
+  const anchor = window.scrollY + getHeaderOffset() + 2;
+  let active: SectionId = 'home';
+
+  for (const id of SECTION_IDS) {
+    const section = document.getElementById(id);
+    if (!section) {
+      continue;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    const top = section.getBoundingClientRect().top + window.scrollY;
+    if (top <= anchor) {
+      active = id;
+    }
+  }
 
-        const nextSection = visible[0]?.target.id;
-        if (nextSection && SECTION_IDS.includes(nextSection as (typeof SECTION_IDS)[number])) {
-          setActiveSection(nextSection as (typeof SECTION_IDS)[number]);
+  return active;
+}
+
+export function SiteHeader() {
+  const pendingSectionRef = useRef<SectionId | null>(null);
+  const [activeSection, setActiveSection] = useState<SectionId>('home');
+
+  useEffect(() => {
+    const syncActiveSection = () => {
+      const resolved = resolveActiveSection();
+      const pending = pendingSectionRef.current;
+
+      if (pending) {
+        if (resolved === pending) {
+          pendingSectionRef.current = null;
+        } else {
+          setActiveSection(pending);
+          return;
         }
-      },
-      {
-        rootMargin: '-35% 0px -50% 0px',
-        threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      },
-    );
+      }
 
-    sections.forEach((section) => observer.observe(section));
+      setActiveSection(resolved);
+    };
 
-    return () => observer.disconnect();
+    let scrollTicking = false;
+    const onScroll = () => {
+      if (scrollTicking) {
+        return;
+      }
+
+      scrollTicking = true;
+      window.requestAnimationFrame(() => {
+        syncActiveSection();
+        scrollTicking = false;
+      });
+    };
+
+    const onHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (isSectionId(hash)) {
+        pendingSectionRef.current = hash;
+        setActiveSection(hash);
+        return;
+      }
+
+      pendingSectionRef.current = null;
+      syncActiveSection();
+    };
+
+    const hash = window.location.hash.replace('#', '');
+    if (isSectionId(hash)) {
+      pendingSectionRef.current = hash;
+      setActiveSection(hash);
+    } else {
+      syncActiveSection();
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('hashchange', onHashChange);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('hashchange', onHashChange);
+    };
   }, []);
 
+  const handleSectionSelect = (sectionId: SectionId) => {
+    pendingSectionRef.current = sectionId;
+    setActiveSection(sectionId);
+  };
+
   return (
-    <header className="border-primary/20 bg-background/90 sticky top-0 z-50 border-b shadow-[0_1rem_2rem_hsl(0_0%_0%_/_0.18)] backdrop-blur-md">
+    <header className="border-primary/20 bg-background/90 sticky top-0 z-50 w-full border-b shadow-[0_1rem_2rem_hsl(0_0%_0%_/_0.18)] backdrop-blur-md">
       <div className="site-header-inner mx-auto flex max-w-6xl items-center justify-between gap-5 px-4 py-4 sm:px-6 sm:py-5 lg:py-6">
         <Link
           href="#home"
           className="flex shrink-0 items-center gap-3 no-underline sm:gap-4"
           aria-label={BUSINESS.name}
+          onClick={() => handleSectionSelect('home')}
         >
           <Image
             src="/images/logo.png"
@@ -58,7 +121,7 @@ export function SiteHeader() {
             sizes="(min-width: 1024px) 76px, (min-width: 640px) 64px, 56px"
             priority
           />
-          <span className="font-display text-primary text-xl leading-[1.02] tracking-wide sm:text-[1.65rem] lg:text-[1.9rem]">
+          <span className="font-display text-primary text-xl uppercase leading-[1.02] tracking-wide sm:text-[1.65rem] lg:text-[1.9rem]">
             {BUSINESS.name.split(' ').map((word) => (
               <span key={word} className="block">
                 {word}
@@ -72,7 +135,7 @@ export function SiteHeader() {
           aria-label="Main"
         >
           {NAV_LINKS.map((link) => {
-            const sectionId = link.href.replace('#', '') as (typeof SECTION_IDS)[number];
+            const sectionId = link.href.replace('#', '') as SectionId;
             const isActive = activeSection === sectionId;
 
             return (
@@ -81,6 +144,7 @@ export function SiteHeader() {
                 href={link.href}
                 className={isActive ? 'site-nav-link site-nav-link-active' : 'site-nav-link'}
                 aria-current={isActive ? 'page' : undefined}
+                onClick={() => handleSectionSelect(sectionId)}
               >
                 {link.label}
               </Link>
@@ -104,7 +168,7 @@ export function SiteHeader() {
           >
             <ul className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => {
-                const sectionId = link.href.replace('#', '') as (typeof SECTION_IDS)[number];
+                const sectionId = link.href.replace('#', '') as SectionId;
                 const isActive = activeSection === sectionId;
 
                 return (
@@ -117,6 +181,7 @@ export function SiteHeader() {
                           : 'text-muted-foreground hover:text-primary hover:bg-accent/50'
                       }`}
                       aria-current={isActive ? 'page' : undefined}
+                      onClick={() => handleSectionSelect(sectionId)}
                     >
                       {link.label}
                     </Link>

@@ -4,22 +4,23 @@ export const BUSINESS = {
   description:
     'Traditional Turkish barbering with modern precision — hot towel shaves, expert fades, and a welcome worth remembering.',
   address: {
-    line1: '12 Castle Street',
+    line1: '12 Mount Pleasant Rd',
     city: 'Shrewsbury',
-    postcode: 'SY1 2BQ',
+    postcode: 'SY1 3BQ',
     country: 'United Kingdom',
   },
   locationDescription: 'Located in the heart of Shrewsbury',
-  phone: '+441743369000',
-  phoneDisplay: '01743 369 000',
-  email: 'hello@topturkishbarbers.co.uk',
-  whatsappUrl: 'https://wa.me/441743369000',
-  mapEmbedUrl:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3884.0!2d-2.7520!3d52.7109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTLCsDQyJzM5LjIiTiAywrA0NScwNy4yIlc!5e0!3m2!1sen!2suk!4v1',
+  phone: '+447784300001',
+  phoneDisplay: '07784 300 001',
+  email: 'topturkishbarbers@gmail.com',
+  whatsappUrl: 'https://wa.me/447784300001',
+  mapCoordinates: {
+    lat: 52.7264,
+    lng: -2.7385,
+  },
   hours: [
-    { day: 'Monday – Friday', time: '9:00 – 18:30' },
-    { day: 'Saturday', time: '8:30 – 17:00' },
-    { day: 'Sunday', time: 'Closed' },
+    { day: 'Monday – Saturday', time: '9:00am – 6:30pm' },
+    { day: 'Sunday', time: '10:00am – 4:00pm' },
   ],
 } as const;
 

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
+import { DM_Sans, Playfair_Display } from 'next/font/google';
 import { BUSINESS } from '@/lib/business-content';
 import './globals.css';
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  variable: '--font-cormorant',
+  variable: '--font-playfair',
   display: 'swap',
 });
 
@@ -31,7 +31,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="min-h-screen overflow-x-hidden">{children}</body>
     </html>
   );

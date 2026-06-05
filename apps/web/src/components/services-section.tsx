@@ -31,7 +31,7 @@ export function ServicesSection() {
   return (
     <section id="services" className="section-shell">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading eyebrow="Services" title="Our services" align="center" />
+        <SectionHeading title="Services" />
 
         <ul className="services-mobile-grid mt-7 sm:mt-8">
           {SERVICES.map((service) => (
