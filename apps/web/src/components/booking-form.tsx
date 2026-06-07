@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@monolith/ui';
 import { useMemo, useState } from 'react';
 import { DateWheelPicker } from '@/components/date-wheel-picker';
 import { submitBookingRequest } from '@/lib/api';
@@ -117,29 +116,26 @@ export function BookingForm() {
     return (
       <div className="booking-form animate-in" role="status" aria-live="polite">
         <div className="booking-form__success border-primary/30 bg-card/50 rounded-2xl border p-8 text-center sm:p-10">
-          <div className="bg-primary/15 text-primary mx-auto flex size-14 items-center justify-center rounded-full">
+          <div className="bg-primary/15 text-primary mx-auto flex size-5 items-center justify-center rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="size-7"
+              className="size-2.5"
               aria-hidden
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="font-display text-foreground mt-6 text-2xl uppercase">Request received</h3>
+          <h3 className="font-display text-foreground mt-4 text-2xl uppercase">Request received</h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{successMessage}</p>
-          <Button
-            type="button"
-            variant="outline"
-            className="mt-8 rounded-full"
-            onClick={resetForm}
-          >
-            Book another visit
-          </Button>
+          <div className="booking-form__submit mt-8">
+            <button type="button" className="book-appointment-btn" onClick={resetForm}>
+              Book another visit
+            </button>
+          </div>
         </div>
       </div>
     );
