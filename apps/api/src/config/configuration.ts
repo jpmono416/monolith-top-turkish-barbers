@@ -26,7 +26,10 @@ export default (): AppConfig => ({
   logLevel: process.env.LOG_LEVEL ?? 'info',
   resendApiKey: process.env.RESEND_API_KEY ?? '',
   bookingNotificationEmail: process.env.BOOKING_NOTIFICATION_EMAIL ?? '',
-  bookingFromEmail: process.env.BOOKING_FROM_EMAIL ?? 'onboarding@resend.dev',
+  bookingFromEmail:
+    process.env.BOOKING_FROM_EMAIL ??
+    process.env.MAIL_FROM ??
+    'onboarding@resend.dev',
   whatsappAccessToken: process.env.WHATSAPP_ACCESS_TOKEN ?? '',
   whatsappPhoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID ?? '',
   whatsappVerifyToken: process.env.WHATSAPP_VERIFY_TOKEN ?? '',

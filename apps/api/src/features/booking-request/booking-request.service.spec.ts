@@ -4,6 +4,18 @@ import type { AppConfig } from '../../config/configuration';
 import { BookingRequestService } from './booking-request.service';
 import type { CreateBookingRequestDto } from './dto/create-booking-request.dto';
 
+const { sendMock } = vi.hoisted(() => ({
+  sendMock: vi.fn().mockResolvedValue({ data: {}, error: null }),
+}));
+
+vi.mock('resend', () => ({
+  Resend: vi.fn().mockImplementation(() => ({
+    emails: {
+      send: sendMock,
+    },
+  })),
+}));
+
 const baseDto: CreateBookingRequestDto = {
   preferredDate: '2026-06-15',
   customerName: 'Alex Smith',
@@ -38,6 +50,7 @@ function createConfig(overrides: Partial<AppConfig> = {}): ConfigService<AppConf
 describe('BookingRequestService', () => {
   beforeEach(() => {
     vi.stubGlobal('fetch', vi.fn());
+    sendMock.mockClear();
   });
 
   afterEach(() => {
@@ -51,6 +64,27 @@ describe('BookingRequestService', () => {
 
     expect(result.success).toBe(true);
     expect(result.message).toContain('appointment request');
+    expect(sendMock).not.toHaveBeenCalled();
+  });
+
+  it('passes the configured from address verbatim to Resend', async () => {
+    const fromAddress = 'Top Turkish Barbers Demo Website <onboarding@resend.dev>';
+    const service = new BookingRequestService(
+      createConfig({
+        resendApiKey: 'test-key',
+        bookingNotificationEmail: 'shop@example.com',
+        bookingFromEmail: fromAddress,
+      }),
+    );
+
+    await service.submit(baseDto);
+
+    expect(sendMock).toHaveBeenCalledOnce();
+    expect(sendMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        from: fromAddress,
+      }),
+    );
   });
 
   it('attempts WhatsApp when credentials and phone are present', async () => {

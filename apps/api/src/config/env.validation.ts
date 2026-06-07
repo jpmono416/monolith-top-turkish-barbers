@@ -44,6 +44,10 @@ class EnvironmentVariables {
 
   @IsOptional()
   @IsString()
+  MAIL_FROM?: string;
+
+  @IsOptional()
+  @IsString()
   WHATSAPP_ACCESS_TOKEN?: string;
 
   @IsOptional()
