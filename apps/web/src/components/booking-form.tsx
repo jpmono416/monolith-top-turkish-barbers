@@ -115,16 +115,14 @@ export function BookingForm() {
   if (formState === 'success') {
     return (
       <div className="booking-form animate-in" role="status" aria-live="polite">
-        <div className="booking-form__success border-primary/30 bg-card/50 rounded-2xl border p-8 text-center sm:p-10">
-          <div className="bg-primary/15 text-primary mx-auto flex size-5 items-center justify-center rounded-full">
+        <div className="booking-form__success">
+          <div className="booking-form__success-icon" aria-hidden="true">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="size-2.5"
-              aria-hidden
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
