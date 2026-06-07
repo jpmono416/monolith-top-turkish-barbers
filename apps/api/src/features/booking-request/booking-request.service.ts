@@ -4,6 +4,7 @@ import type { BookingRequestResponse } from '@monolith/types';
 import { Resend } from 'resend';
 import type { AppConfig } from '../../config/configuration';
 import type { CreateBookingRequestDto } from './dto/create-booking-request.dto';
+import { normalizeWhatsAppRecipient } from './normalize-whatsapp-recipient';
 
 @Injectable()
 export class BookingRequestService {
@@ -101,7 +102,7 @@ export class BookingRequestService {
       return;
     }
 
-    const to = this.normalizeWhatsAppRecipient(customerPhone);
+    const to = normalizeWhatsAppRecipient(customerPhone);
     const url = `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`;
 
     this.logger.log('Sending WhatsApp booking confirmation');
@@ -136,7 +137,4 @@ export class BookingRequestService {
     }
   }
 
-  private normalizeWhatsAppRecipient(phone: string): string {
-    return phone.replace(/\D/g, '');
-  }
 }

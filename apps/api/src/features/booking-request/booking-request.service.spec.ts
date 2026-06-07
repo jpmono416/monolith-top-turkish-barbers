@@ -72,6 +72,30 @@ describe('BookingRequestService', () => {
     expect(init.headers).toMatchObject({
       Authorization: 'Bearer test-token',
     });
+
+    const body = JSON.parse(init.body as string) as { to: string };
+    expect(body.to).toBe('447700900000');
+  });
+
+  it('normalizes UK national phone format for WhatsApp delivery', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const service = new BookingRequestService(
+      createConfig({
+        whatsappAccessToken: 'test-token',
+        whatsappPhoneNumberId: '123456',
+      }),
+    );
+
+    await service.submit({
+      ...baseDto,
+      customerPhone: '07761387450',
+    });
+
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    const body = JSON.parse(init.body as string) as { to: string };
+    expect(body.to).toBe('447761387450');
   });
 
   it('skips WhatsApp when customer phone is missing', async () => {
