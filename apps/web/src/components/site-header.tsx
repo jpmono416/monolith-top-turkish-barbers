@@ -154,48 +154,6 @@ export function SiteHeader() {
             Book Appointment
           </Link>
         </nav>
-
-        <details className="site-mobile-menu group relative">
-          <summary
-            className="text-foreground hover:text-primary list-none cursor-pointer rounded-full border border-border px-4 py-2.5 text-sm font-medium no-underline transition-colors [&::-webkit-details-marker]:hidden"
-            aria-label="Open menu"
-          >
-            Menu
-          </summary>
-          <nav
-            className="border-border/60 bg-background/95 absolute right-0 top-[calc(100%+0.5rem)] z-50 min-w-[12rem] rounded-2xl border p-3 shadow-xl backdrop-blur-md"
-            aria-label="Mobile"
-          >
-            <ul className="flex flex-col gap-1">
-              {NAV_LINKS.map((link) => {
-                const sectionId = link.href.replace('#', '') as SectionId;
-                const isActive = activeSection === sectionId;
-
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`block rounded-lg px-4 py-3 text-sm font-medium no-underline transition-colors ${
-                        isActive
-                          ? 'text-primary bg-accent/30'
-                          : 'text-muted-foreground hover:text-primary hover:bg-accent/50'
-                      }`}
-                      aria-current={isActive ? 'page' : undefined}
-                      onClick={() => handleSectionSelect(sectionId)}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-              <li className="border-border/60 mt-1 border-t pt-1">
-                <Link href="#booking" className="book-appointment-btn book-appointment-btn-block">
-                  Book Appointment
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </details>
       </div>
     </header>
   );

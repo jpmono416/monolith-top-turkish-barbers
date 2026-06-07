@@ -40,8 +40,9 @@ export function ContactSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading title="Visit Us" />
 
-        <div className="visit-us-card">
-          <div className="visit-us-card__grid">
+        <div className="section-content">
+          <div className="visit-us-card">
+            <div className="visit-us-card__grid">
             <div className="visit-us-card__column visit-us-card__column--location">
               <VisitUsMap lat={BUSINESS.mapCoordinates.lat} lng={BUSINESS.mapCoordinates.lng} />
               <div className="visit-us-card__rule" aria-hidden="true" />
@@ -97,6 +98,7 @@ export function ContactSection() {
                   })}
                 </ul>
               </div>
+            </div>
             </div>
           </div>
         </div>

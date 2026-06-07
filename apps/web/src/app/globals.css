@@ -199,19 +199,11 @@
   box-shadow: none;
 }
 
-.site-mobile-menu {
-  display: block;
-}
-
 @media (width >= 48rem) {
   .site-desktop-nav {
     display: flex;
     align-items: center;
     column-gap: 2rem;
-  }
-
-  .site-mobile-menu {
-    display: none;
   }
 }
 
@@ -336,7 +328,8 @@
 .services-mobile-grid,
 .services-desktop-row {
   list-style: none;
-  margin: 0;
+  margin-inline: 0;
+  margin-bottom: 0;
   padding: 0;
 }
 
@@ -394,12 +387,22 @@
   background: hsl(var(--primary));
 }
 
+.section-content {
+  margin-top: 1.75rem;
+}
+
+@media (width >= 40rem) {
+  .section-content {
+    margin-top: 2rem;
+  }
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   width: min(100%, 17rem);
-  margin: 1.75rem auto 0;
+  margin-inline: auto;
   list-style: none;
   padding: 0;
 }
@@ -413,7 +416,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.75rem;
     width: min(100%, 48rem);
-    margin-top: 2rem;
   }
 
   .gallery-grid > li:nth-child(n + 2) {
@@ -575,7 +577,6 @@
 }
 
 .visit-us-card {
-  margin-top: 1.75rem;
   overflow: hidden;
   border-radius: 0.75rem;
   border: 1px solid hsl(var(--primary) / 0.2);
@@ -585,12 +586,6 @@
   box-shadow:
     inset 0 1px 0 hsl(var(--primary) / 0.12),
     0 1rem 2rem hsl(0 0% 0% / 0.16);
-}
-
-@media (width >= 40rem) {
-  .visit-us-card {
-    margin-top: 2rem;
-  }
 }
 
 .visit-us-card__grid {
@@ -751,14 +746,7 @@
 }
 
 .booking-form {
-  margin-top: 2rem;
   width: 100%;
-}
-
-@media (width >= 40rem) {
-  .booking-form {
-    margin-top: 2.5rem;
-  }
 }
 
 .booking-form__inner {

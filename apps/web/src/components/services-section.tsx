@@ -33,29 +33,31 @@ export function ServicesSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading title="Services" />
 
-        <ul className="services-mobile-grid mt-7 sm:mt-8">
-          {SERVICES.map((service) => (
-            <li key={service.name}>
-              <ServiceCard service={service} />
-            </li>
-          ))}
-        </ul>
+        <div className="section-content">
+          <ul className="services-mobile-grid">
+            {SERVICES.map((service) => (
+              <li key={service.name}>
+                <ServiceCard service={service} />
+              </li>
+            ))}
+          </ul>
 
-        <div className="services-desktop-layout mt-7 sm:mt-8">
-          <ul className="services-desktop-row services-desktop-row--four">
-            {PRIMARY_ROW.map((service) => (
-              <li key={service.name}>
-                <ServiceCard service={service} />
-              </li>
-            ))}
-          </ul>
-          <ul className="services-desktop-row services-desktop-row--three">
-            {SECONDARY_ROW.map((service) => (
-              <li key={service.name}>
-                <ServiceCard service={service} />
-              </li>
-            ))}
-          </ul>
+          <div className="services-desktop-layout">
+            <ul className="services-desktop-row services-desktop-row--four">
+              {PRIMARY_ROW.map((service) => (
+                <li key={service.name}>
+                  <ServiceCard service={service} />
+                </li>
+              ))}
+            </ul>
+            <ul className="services-desktop-row services-desktop-row--three">
+              {SECONDARY_ROW.map((service) => (
+                <li key={service.name}>
+                  <ServiceCard service={service} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

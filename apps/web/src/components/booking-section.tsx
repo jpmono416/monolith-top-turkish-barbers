@@ -7,7 +7,9 @@ export function BookingSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading title="Booking" />
 
-        <BookingForm />
+        <div className="section-content">
+          <BookingForm />
+        </div>
       </div>
     </section>
   );

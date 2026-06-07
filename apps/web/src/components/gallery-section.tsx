@@ -8,13 +8,15 @@ export function GallerySection() {
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <SectionHeading title="Gallery" />
 
-        <ul className="gallery-grid">
+        <div className="section-content">
+          <ul className="gallery-grid">
           {GALLERY_COLUMNS.map((images, columnIndex) => (
             <li key={columnIndex} className={`min-w-0 ${columnIndex > 0 ? 'max-lg:hidden' : ''}`}>
               <GalleryColumnCarousel images={images} columnIndex={columnIndex} />
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
       </div>
     </section>
   );
